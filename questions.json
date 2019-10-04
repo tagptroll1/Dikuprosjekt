@@ -1,8 +1,7 @@
 [
   {
-      "_id": "5d8784b275497c82e9cefc1c",
       "question_text": "Hva blir utskriften?",
-      "question_code": "def function(arg):\n\treturn 2 * x\n\nvariable = 5\nprint(variable, function(variable + 1))",
+      "question_code": "def function(arg):\n\treturn 2 * arg\n\nvariable = 5\nprint(variable, function(variable + 1))",
       "question_answer": "5 12",
       "alternatives": [
           "5 12",
@@ -21,7 +20,6 @@
       "type": "multichoice"
   },
   {
-      "_id": "5d8784b275497c82e9cefc1d",
       "question_text": "Hva blir utskriften?",
       "question_code": "x = 2\ny = 3\nprint(str(x) + str(y))",
       "question_answer": "23",
@@ -43,7 +41,6 @@
       "type": "multichoice"
   },
   {
-      "_id": "5d87857375497c82e9cefc24",
       "question_text": "Hva blir utskriften?",
       "question_code": "def function(x):\n\tx = x + y\n\treturn x\n\nx = 3\ny = 5\nprint(f(x), y, x)",
       "question_answer": "8 5 3",
@@ -66,7 +63,6 @@
       "type": "multichoice"
   },
   {
-      "_id": "5d87857375497c82e9cefc28",
       "question_text": "Hva blir utskriften?",
       "question_code": "def f(x, y):\n\treturn x + y\n\ndef g(x):\n\treturn f(x, x)\n\nprint(f(g(2), f(2, g(2))))",
       "question_answer": "10",
@@ -86,7 +82,6 @@
       "type": "multichoice"
   },
   {
-      "_id": "5d87857375497c82e9cefc21",
       "question_text": "Hva blir utskriften?",
       "question_code": "def function(arg1, arg2):\n\treturn arg1 + arg2\n\nprint(function(function(1, 2), 3))",
       "question_answer": "6",
@@ -107,7 +102,6 @@
       "type": "multichoice"
   },
   {
-      "_id": "5d87857375497c82e9cefc22",
       "question_text": "Hva blir utskriften?",
       "question_code": "def neste_tall():\n\tglobal tall\n\ttall = tall + 1\n\ntall = 0\nneste_tall()\nprint(tall)",
       "question_answer": "1",
@@ -128,7 +122,6 @@
       "type": "multichoice"
   },
   {
-      "_id": "5d87857375497c82e9cefc27",
       "question_text": "Hva blir utskriften?",
       "question_code": "tall = 0\n\ndef neste_tall():\n\ttall = tall + 1\n\nneste_tall()\nprint(tall)",
       "question_answer": "UnboundLocalError: local variable 'tall' referenced before assignment",
@@ -149,7 +142,6 @@
       "type": "multichoice"
   },
   {
-      "_id": "5d87857375497c82e9cefc26",
       "question_text": "Hva blir utskriften?",
       "question_code": "tall = 0\n\ndef neste_tall(x):\n\tx = x + 1\n\nneste_tall(tall)\nprint(tall)",
       "question_answer": "0",
@@ -171,7 +163,6 @@
       "type": "multichoice"
   },
   {
-      "_id": "5d8784e775497c82e9cefc1e",
       "question_text": "Hva blir utskriften?",
       "question_code": "def aldersForskjell(eldst=0, yngst=0):\n\treturn eldst - yngst\n\nprint(aldersForskjell(yngst=9, eldst=7))",
       "question_answer": "-2",
@@ -192,7 +183,6 @@
       "type": "multichoice"
   },
   {
-      "_id": "5d8784e775497c82e9cefc1f",
       "question_text": "Hva blir utskriften?",
       "question_code": "tall = 0\n\ndef neste_tall(arg):\n\treturn arg + 1\n\nneste_tall(tall)\nprint(tall)",
       "question_answer": "0",
@@ -214,9 +204,8 @@
       "type": "multichoice"
   },
   {
-      "_id": "5d87857375497c82e9cefc23",
-      "question_text": "Fyll inn det som mangler\nEksempel p� funksjonskall\n`>>> snittHastighet(10,100)`\n`10.0`",
-      "question_code": "def snitt_hastighet(@@):\n\tif tid == 0:\n\t\tprint('Kan ikke bergne snitthastighet')\n\t\treturn\n\treturn distanse / tid",
+      "question_text": "Fyll inn det som mangler\nEksempel på funksjonskall\n`>>> snittHastighet(10,100)`\n`10.0`",
+      "question_code": "def snitt_hastighet(@@):\n\tif tid == 0:\n\t\tprint('Kan ikke beregne snitthastighet')\n\t\treturn\n\treturn distanse / tid",
       "question_answer": "tid, distanse",
       "alternatives": [
           "tid, distanse",
@@ -235,7 +224,6 @@
       "type": "dropdown"
   },
   {
-      "_id": "5d87857375497c82e9cefc20",
       "question_text": "Hva blir utskriften?",
       "question_code": "x = 2\ny = 3\nprint(2 * int(str(x) + str(y)))",
       "question_answer": "46",
@@ -256,7 +244,6 @@
       "type": "multichoice"
   },
   {
-      "_id": "5d87857375497c82e9cefc29",
       "question_text": "Fyll inn det som mangler slik at funksjonen returnerer den mellomste verdien av 3 ulike argumenter\n\nEksempel:\n`>>> mellomste(5,4,9)`\n`5`",
       "question_code": "def mellomste(x, y, z):\n\t if x < y and x < z:\n\t\treturn min(y, z)\n\telif @@ \n\telse:\n\t\treturn min(x, y)",
       "question_answer": "y < z:\n\treturn min(x, z)",
@@ -280,7 +267,6 @@
       "type": "dropdown"
   },
   {
-      "_id": "5d87857375497c82e9cefc25",
       "question_text": "Hva blir utskriften?",
       "question_code": "x = 2\ny = 3\nprint(2 * str(x) + str(y))",
       "question_answer": "223",
