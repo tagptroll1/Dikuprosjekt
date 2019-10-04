@@ -1,0 +1,42 @@
+@font-face {
+    font-family: "Raleway";
+    src: url("font/Raleway/Raleway-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Raleway";
+    src: url("font/Raleway/Raleway-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Raleway";
+    src: url("font/Raleway/Raleway-Light.ttf") format("truetype");
+    font-weight: 300; /* corresponds to "light" */
+    font-style: normal;
+}
+
+:root {
+    --font-main: "Raleway", sans-serif;
+    --color-main: #2c2c2c;
+
+    --bg-main: #ffffff;
+    --bg-aside: #dadada;
+    --bg-focus: #cf3c3a;
+}
+
+body {
+    font-family: var(--font-main, sans-serif);
+    margin: 0;
+    color: var(--color-maintext, black);
+    background-color: var(--bg-main, white);
+}
+
+code {
+    font-family: menlo, inconsolata, monospace;
+    font-size: calc(1em - 2px);
+    padding: 0.2em 0.4em;
+    border-radius: 2px;
+    line-height: 1.5rem;
+}
