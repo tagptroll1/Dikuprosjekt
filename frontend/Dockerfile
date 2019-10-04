@@ -1,5 +1,5 @@
 # Dockerfile
-FROM node:latest-alpine as build
+FROM node:slim as build
 
 WORKDIR /app
 
@@ -9,13 +9,13 @@ COPY /app .
 RUN npm ci
 RUN npm run build
 
-FROM node:latest-alpine as prod
+FROM node:slim as prod
 
 WORKDIR /app
 COPY app/package.json app/package-lock.json ./
 RUN npm ci --production
 
-FROM node:latest-alpine
+FROM node:slim
 
 WORKDIR /app
 COPY --from=build /app/__sapper__/build __sapper__/build
