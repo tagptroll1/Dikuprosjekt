@@ -11,9 +11,9 @@
       while (txt.search("`") !== -1 && count % 2 === 0) {
         txt = txt.replace(
           "`",
-          "<code style='background-color: var(--bg-aside)'>"
+          "<b>"
         );
-        txt = txt.replace("`", "</code>");
+        txt = txt.replace("`", "</b>");
         count = (txt.match(/`/g) || []).length;
       }
     }
@@ -22,7 +22,18 @@
 
   $: text = parseText($question.question_text);
 </script>
-
+<style>
+  p{
+    margin: 0;
+    color: black;
+    padding: 5px 20px;
+  }
+  div{
+    background-color: #ffffff;
+  }
+</style>
+<div>
 <p>
   {@html text}
 </p>
+</div>

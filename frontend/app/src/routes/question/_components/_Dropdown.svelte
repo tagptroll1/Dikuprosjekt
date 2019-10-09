@@ -5,7 +5,7 @@
   import user from "../../../stores/user";
   import hljs from "highlight.js/lib/highlight";
   import python from "highlight.js/lib/languages/python";
-  import { beforeUpdate } from "svelte";
+  import { afterUpdate } from "svelte";
 
   $: selected = $question.answer && $question.answer.selected_answer;
 
@@ -27,9 +27,9 @@
     };
   }
 
-  beforeUpdate(() => {
+  afterUpdate(() => {
     if (prev_id !== $question._id && !$question.answer) {
-      selected = null;
+      selected = '';
     }
 
     piece1 = hljs.highlight("python", pieces[0]);
@@ -38,14 +38,6 @@
 
   });
 </script>
-
-<style>
-  code {
-    display: block;
-    border-radius: 8px 4px;
-    background-color: var(--bg-aside);
-  }
-</style>
 
 <pre>
   <code>
