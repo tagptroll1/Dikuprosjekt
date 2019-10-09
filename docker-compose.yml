@@ -40,20 +40,20 @@ services:
       - application
 
   svelte:
-        build:
-            context: ./frontend/
-            dockerfile: Dockerfile
-        environment:
-            - API_URL=flask
-            - API_KEY=${API_KEY}
-        env_file:
-          - ./.env
-        command: node ./__sapper__/build
-        restart: unless-stopped
-        ports:
-          - 80:3000
-        networks:
-          - application
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    environment:
+      - API_URL=http://flask:8000
+      - API_KEY=${API_KEY}
+    env_file:
+      - ./.env
+    command: node ./__sapper__/build
+    restart: unless-stopped
+    ports:
+      - 80:3000
+    networks:
+      - application
 
 
 volumes:
