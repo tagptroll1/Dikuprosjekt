@@ -6,16 +6,6 @@
   import question from "../../stores/question";
 </script>
 
-<style>
-  h1 {
-    font-family: "Roboto", sans-serif;
-    font-weight: 300;
-    text-align: center;
-  }
-</style>
-
-<h1>Multiple choice</h1>
-
 <QuestionText />
 <Codeblock code={$question.question_code} />
 <MultipleChoiceAlternatives />

@@ -81,29 +81,25 @@
     display: flex;
     flex-direction: column;
   }
-  button {
-    margin: 20px;
-    width: 8rem;
-  }
 
-  article div {
+  article > div {
     display: none;
-    width: 50%;
-    height: 30%;
-    position: fixed;
-    top: 45%;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    z-index: 50;
-
-    background-color: lightgrey;
-    box-shadow: 1px 1px 1px 1px black;
-    text-align: center;
   }
 
   article .show {
-    display: block;
+    display: flex;
+
+    position: absolute;
+    margin: 0 auto;
+    padding: 10px 20px;
+
+    background-color: rgb(217, 255, 247);
+    box-shadow: 0 0 3px -2px black;
+    text-align: center;
+
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
 
   #pbar {
@@ -111,6 +107,10 @@
     top: 0;
     left: 0;
     width: 100%;
+  }
+
+  .q{
+    max-width: 800px;
   }
 </style>
 
@@ -125,10 +125,12 @@
     <p>
       You have unanswered questions. Index: {unanswered_index && unanswered_index.toString()}
     </p>
-    <button on:click={() => (areYouSure = false)}>Go back</button>
-    <button on:click={e => submit(e, true)}>Submit!</button>
+    <div>
+      <button on:click={() => (areYouSure = false)}>Go back</button>
+      <button on:click={e => submit(e, true)}>Submit!</button>
+    </div>
   </div>
-  <section>
+  <section class="q">
     <slot />
   </section>
 </article>
@@ -138,8 +140,8 @@
     <button id="prev" on:click={prev}>Forrige</button>
   {/if}
   {#if $index != $questions.length - 1}
-    <button id="next" on:click={next}>Neste</button>
+    <button id="next" on:click={next}>Next</button>
   {:else}
-    <button id="end" on:click={submit}>Fullfør quiz</button>
+    <button id="end" on:click={submit}>Finish quiz</button>
   {/if}
 </section>

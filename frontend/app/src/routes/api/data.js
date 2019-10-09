@@ -11,7 +11,7 @@ export async function post(req, res) {
         });
         const url = `${process.env.API_URL}/api/v1/dataset`;
 
-        await fetch(url, {
+        const resp = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -19,6 +19,8 @@ export async function post(req, res) {
             },
             body: JSON.stringify(body),
         });
+        console.log(resp.status, await resp.text());
+        
     } catch (error) {
         console.error(error);
     }

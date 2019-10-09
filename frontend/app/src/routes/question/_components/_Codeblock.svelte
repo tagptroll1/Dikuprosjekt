@@ -7,14 +7,6 @@
   $: highlighted = hljs.highlight("python", code);
 </script>
 
-<style>
-  code {
-    display: block;
-    border-radius: 8px 4px;
-    background-color: var(--bg-aside);
-  }
-</style>
-
 {#if highlighted.value}
   <pre>
     <code>

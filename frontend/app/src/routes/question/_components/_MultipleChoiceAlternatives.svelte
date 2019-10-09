@@ -28,35 +28,48 @@
 
 <style>
   button {
+    cursor: pointer;
+
     outline: none;
-    font-size: 20px;
-    display: inline-block;
-    padding: 0.35em 1.2em;
-    border: 0.1em solid rgb(0, 0, 0);
-    margin: 0 0.3em 0.3em 0;
-    border-radius: 0.12em;
+    font-size: 1em;
+
+    padding: 5px 10px;
+    margin: 10px  0;
+
+    display: block;
+    width: 100%;
+
     box-sizing: border-box;
     text-decoration: none;
-    font-family: "Roboto", sans-serif;
+    font-family: var(--code);
     font-weight: 300;
-    color: black;
     text-align: center;
     transition: all 0.15s;
-    background-color: transparent;
+    
+    color: rgb(221, 221, 221);
+    background-color: rgb(47, 47, 47);    
+
+    border:none;
+    border-left: 5px solid rgb(0, 0, 0);
   }
   button:hover {
     color: #ffffff;
     background-color: black;
   }
   #choices {
-    padding: 40px;
+    margin: 40px;
   }
   li {
     list-style: none;
   }
+  ul {
+    margin: 0;
+    padding: 0;
+  }
 
   .selected {
-    background-color: greenyellow;
+    font-weight: bold;
+    border-left: 5px solid rgb(100, 155, 255);
   }
 </style>
 
