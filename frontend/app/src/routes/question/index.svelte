@@ -1,6 +1,4 @@
 <script>
-  const type = "questions";
-
   import Question from "./_Question.svelte";
   import questions from "../../stores/questions";
   import { startDate } from "../../stores/dates";
@@ -11,7 +9,7 @@
     let count = 0;
     while ($questions.length <= 0 && process.browser && count < 10) {
       try {
-        const resp = await fetch("/api/questions"); // Change this to get different questions
+        const resp = await fetch("/api/questions?limit=10"); // Change this to get different questions
         if (!resp.ok) {
           continue;
         }
