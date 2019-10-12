@@ -23,3 +23,13 @@ export async function post(req, res) {
         console.error(error);
     }
 }
+
+export async function get(req, res) {
+    try {
+        const response = await fetch(`${process.env.API_URL}/api/v1/data`);
+        const json = await response.json();
+        res.json(json);
+    } catch (error) {
+        res.error(error);
+    }
+}
