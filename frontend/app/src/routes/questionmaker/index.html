@@ -1,0 +1,18 @@
+<script context="module">
+  export async function preload(page, session) {
+    const loggedIn = session && session.loggedIn;
+    console.log(session);
+    
+    if (!loggedIn) this.redirect(401, "/login")
+  }
+</script>
+
+<script>
+  import {stores} from "@sapper/app"
+  const {session} = stores();
+  console.log($session);
+  
+</script>
+
+hello
+<button on:click={ () => fetch("/api/test") }>Test</button>

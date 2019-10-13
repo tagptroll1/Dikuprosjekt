@@ -127,6 +127,7 @@
     class="start" 
     on:click={start}
   >Start as <b>{value ? value : 'anonymous'}</b></button>
+  <a href="/questionmaker">Make questions!</a>
 </div>
 
 <style>

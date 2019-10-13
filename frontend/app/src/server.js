@@ -16,19 +16,15 @@ const app = express();
 const sess = {
     secret: "super-random-secret-here",
     cookie: {
-        maxAxe: 31536000,
+        maxAge: 31536000,
     },
     resave: false,
     saveUninitialized: true,
     store: new FileStore({
-        path: process.env.NOW ? `/tmp/sessions` : `.sessions`,
+        path: `.sessions`,
     }),
 };
 
-if (app.get("env") === "production") {
-    app.set("trust proxy", 1);
-    sess.cookie.secure = true;
-}
 
 app.use(bodyParser.json())
     .use(session(sess))
@@ -36,7 +32,11 @@ app.use(bodyParser.json())
         compression({ threshold: 0 }),
         sirv("static", { dev }),
         sapper.middleware({
-            session: req => ({loggedIn: !!(req && req.session && req.session.apiKey)})
+            session: req => {
+                console.log(req.session);
+                
+                return {loggedIn: !!(req && req.session && req.session.apiKey)}
+            }
         })
     )
     .listen(PORT, err => {

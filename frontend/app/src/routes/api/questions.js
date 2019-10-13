@@ -1,13 +1,14 @@
 import fetch from "node-fetch";
-import queryString from "query-string";
+import queryString from "querystring";
 
 export async function get(req, res) {
-    const url = new URL(process.env.API_URL);
+    const url_str = `${process.env.API_URL}/api/v1/questions`;
+    const url = new URL(url_str);
     const query = queryString.stringify(req.query);
     url.search = query;
 
     try {
-        const resp = await fetch(url);
+        const resp = await fetch(url.href);
         const json = await resp.json();
 
         res.json(json);
