@@ -32,11 +32,7 @@ app.use(bodyParser.json())
         compression({ threshold: 0 }),
         sirv("static", { dev }),
         sapper.middleware({
-            session: req => {
-                console.log(req.session);
-                
-                return {loggedIn: !!(req && req.session && req.session.apiKey)}
-            }
+            session: req => ({loggedIn: !!(req && req.session && req.session.apiKey)})
         })
     )
     .listen(PORT, err => {
