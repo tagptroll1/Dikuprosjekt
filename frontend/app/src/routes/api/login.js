@@ -1,8 +1,10 @@
 import {compare} from "bcrypt";
 
 export async function post(req, res) {
-  let auth = req.header("Authorization");
-  let [username, password] = auth.split(":");
+  const authorization = req.header("Authorization");
+  const auth = Buffer.from(authorization, 'base64').toString();
+  
+  const [username, password] = auth.split(":");
   
   if (username !== process.env.username) {
     return res.status(401).end("Wrong username or password");

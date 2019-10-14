@@ -1,15 +1,37 @@
-<script context="module">
-  export async function preload(page, session) {
-    const loggedIn = session && session.loggedIn;
-    if (!loggedIn) this.redirect(401, "/login")
+<script>
+  import {stores} from "@sapper/app"
+  import Login from "../../components/Login.svelte";
+
+  const {session} = stores();
+
+  let showbox = false;
+  setTimeout(() => (showbox=true), 5);
+
+  async function handleLogin({detail}) {
+    const {username, password} = detail;
+
+    const resp = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        Authorization: btoa(`${username}:${password}`)
+      }
+    });
+
+    if (resp.ok) {
+      $session.loggedIn = true;
+    } else {
+      // Initiate shake of box!
+    }
   }
 </script>
 
-<script>
-  import {stores} from "@sapper/app"
-  const {session} = stores();
-  
-</script>
 
-hello
-<button on:click={ () => fetch("/api/test") }>Test</button>
+{#if $session.loggedIn}
+  <h1>hello</h1>
+  <button on:click={ () => fetch("/api/test") }>Test</button>
+  <a href="/">Home</a>
+{:else}
+  {#if showbox}
+    <Login on:login={handleLogin} />
+  {/if}
+{/if}

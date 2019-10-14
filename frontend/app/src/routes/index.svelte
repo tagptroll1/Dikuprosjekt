@@ -1,7 +1,7 @@
 <script>
   import { goto } from "@sapper/app"
-  import { onMount,onDestroy } from "svelte";
-  import { slide, fade } from "svelte/transition";
+  import { onMount, onDestroy } from "svelte";
+  import { slide, fade, fly } from "svelte/transition";
 
   import user from "../stores/user.js";
   import index from "../stores/index";
@@ -16,7 +16,10 @@
   let canvas;
   let ctx;
   let color;
-  onMount(()=>{
+
+  let secretDoor = false;
+
+  onMount(() => {
     ctx = canvas.getContext('2d');
     let frame;
 
@@ -93,12 +96,13 @@
   bind:this={canvas}
   width={32}
   height={32}
+  on:click={() => secretDoor = false}
 ></canvas>
 
 <div class="outer">
   <figure>
     {#if value === 'python'}
-      <Logo2/>
+      <Logo2 on:secretDoor={() => secretDoor = true}/>
     {:else}
       <Logo/>
     {/if}
@@ -127,7 +131,16 @@
     class="start" 
     on:click={start}
   >Start as <b>{value ? value : 'anonymous'}</b></button>
-  <a href="/questionmaker">Make questions!</a>
+
+  {#if secretDoor}
+    <button 
+      in:fly="{{ y: -200, duration: 1000 }}" 
+      out:fly="{{ y: -200, duration: 1000 }}"
+      on:click={() => goto("/questionmaker")}
+    >
+      Make questions!
+    </button>
+  {/if}
 </div>
 
 <style>

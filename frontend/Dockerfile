@@ -1,5 +1,5 @@
 # Dockerfile
-FROM node:alpine as build
+FROM node:12-alpine as build
 
 RUN apk --no-cache add --virtual native-deps \
   g++ gcc libgcc libstdc++ linux-headers autoconf automake make nasm python git && \
@@ -13,7 +13,7 @@ COPY /app .
 RUN npm ci
 RUN npm run build
 
-FROM node:alpine as prod
+FROM node:12-alpine as prod
 
 RUN apk --no-cache add --virtual native-deps \
   g++ gcc libgcc libstdc++ linux-headers autoconf automake make nasm python git && \
@@ -23,7 +23,7 @@ WORKDIR /app
 COPY app/package.json app/package-lock.json ./
 RUN npm ci --production
 
-FROM node:alpine
+FROM node:12-alpine
 
 WORKDIR /app
 COPY --from=build /app/__sapper__/build __sapper__/build
