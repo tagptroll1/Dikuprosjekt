@@ -17,6 +17,7 @@ const onwarn = (warning, onwarn) =>
         /[/\\]@sapper[/\\]/.test(warning.message)) ||
     onwarn(warning);
 
+
 export default {
     client: {
         input: config.client.input(),

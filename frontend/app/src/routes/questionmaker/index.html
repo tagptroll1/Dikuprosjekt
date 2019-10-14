@@ -1,0 +1,37 @@
+<script>
+  import {stores} from "@sapper/app"
+  import Login from "../../components/Login.svelte";
+
+  const {session} = stores();
+
+  let showbox = false;
+  setTimeout(() => (showbox=true), 5);
+
+  async function handleLogin({detail}) {
+    const {username, password} = detail;
+
+    const resp = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        Authorization: btoa(`${username}:${password}`)
+      }
+    });
+
+    if (resp.ok) {
+      $session.loggedIn = true;
+    } else {
+      // Initiate shake of box!
+    }
+  }
+</script>
+
+
+{#if $session.loggedIn}
+  <h1>hello</h1>
+  <button on:click={ () => fetch("/api/test") }>Test</button>
+  <a href="/">Home</a>
+{:else}
+  {#if showbox}
+    <Login on:login={handleLogin} />
+  {/if}
+{/if}
