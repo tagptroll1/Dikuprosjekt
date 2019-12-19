@@ -13,8 +13,8 @@ from flask import request
 class DataEndpoint(ApiBaseDefault):
     """/api/v1/data"""
 
-    model = DataModel
 
+    model = DataModel
 
 class DatasetEndpoint(ApiBase):
     """/api/v1/dataset"""

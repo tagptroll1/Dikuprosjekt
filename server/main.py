@@ -8,6 +8,7 @@ from app.site.api.multi_choice_endpoint import endpoints as multi_choice
 from app.site.api.question_endpoint import endpoints as questionset
 from app.site.api.sets_endpoint import endpoints as set_endpoint
 from app.site.api.question_line_endpoint import endpoints as q_line_endpoint
+from app.site.api.coderunner_endpoint import endpoints as coderunner_endpoint
 from app.site.manager import Manager
 
 parser = argparse.ArgumentParser(
@@ -32,6 +33,7 @@ endpoints = (
     set_endpoint,
     questionset,
     q_line_endpoint,
+    coderunner_endpoint
 )
 manager.load_api_resources(endpoints)
 

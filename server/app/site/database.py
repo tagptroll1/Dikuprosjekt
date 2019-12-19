@@ -76,7 +76,6 @@ class MongoDb(object):
 
         _id = table.insert_one(obj).inserted_id
         obj["_id"] = _id
-
         return obj
 
     def edit(self, table_name, old, new, type_=None):

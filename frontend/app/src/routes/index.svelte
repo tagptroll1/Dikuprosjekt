@@ -78,7 +78,8 @@
 
     if(valid){
       $user = input.value;
-      goto("/question");
+      goto("/unit")
+      //goto("/question");
     } else {
       if(numberOfAttempts >= 3){
         //just go there anyway...jees...

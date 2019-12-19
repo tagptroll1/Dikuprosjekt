@@ -162,8 +162,9 @@ class QuestionFeedback(ApiBase):
 
 class FeedbackSet(ApiBase):
     @json_serialize
+
     def post(self):
-        body = request.get_json()
+        body = request.get_json() ####
         feedbacks = list(self.database.find("feedback", question_id=body))
         response = []
         for feedback in feedbacks:
@@ -179,6 +180,7 @@ class FeedbackSet(ApiBase):
             response.append(resp)
 
         return response
+
 
 
 endpoints = {

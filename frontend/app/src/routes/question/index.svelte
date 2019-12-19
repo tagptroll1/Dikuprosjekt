@@ -39,7 +39,7 @@
 </style>
 
 {#await promise}
-  Loading.
+  Loading...
 {:then result}
   <Question />
 {:catch err}
