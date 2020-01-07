@@ -9,7 +9,7 @@
   import question from "../../stores/question";
   import questions from "../../stores/questions";
 
-  // Components
+  // Components 
   import ProgressBar from "./_components/_ProgressBar.svelte";
 
 

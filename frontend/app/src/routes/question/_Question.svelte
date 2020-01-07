@@ -4,6 +4,8 @@
   import Dropdown from "./_Dropdown.svelte";
   import MultiChoice from "./_MultiChoice.svelte";
   import FillIn from "./_FillIn.svelte";
+  import UnitTest from "./_Unit.svelte";
+
 </script>
 
 {#if $question.type === 'dropdown'}
@@ -12,4 +14,6 @@
   <MultiChoice />
 {:else if $question.type === 'fillin'}
   <FillIn />
+{:else if $question.type === 'unittest' || $question.type === 'coderunner'}
+  <UnitTest />
 {/if}

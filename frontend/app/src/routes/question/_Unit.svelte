@@ -1,7 +1,8 @@
 <script>
 
-  import questions from "../stores/questions";
+  import questions from "../../stores/questions";
   import { onMount } from "svelte";
+
     
     async function postCode(data) {
       try {

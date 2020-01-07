@@ -9,6 +9,7 @@ import * as sapper from "@sapper/server";
 const FileStore = sessionFileStore(session);
 
 const { PORT, NODE_ENV } = process.env;
+
 const dev = NODE_ENV === "development";
 
 const app = express();
