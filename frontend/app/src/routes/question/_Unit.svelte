@@ -1,7 +1,10 @@
+
 <script>
 
   import questions from "../../stores/questions";
+  import index from "../../stores/index";
   import { onMount } from "svelte";
+  import QuestionText from "./_components/_QuestionText.svelte";
 
     
     async function postCode(data) {
@@ -21,15 +24,18 @@
     }
 
   let feedback_text = ""
+  let ans = ""
+  let q_text = $questions[$index].question_text
 
   function handleClick() {
       const dataset = {
         end_time: new Date(Date.now()),
         code: editor.getValue(),
-        unit_tests: "Her skal det være en lille test"
+        unit_tests: $questions[$index].unit_test
       };
       postCode(dataset).then((data) => {
         feedback_text = data["fd"]
+        ans = "Koden din evaluerte til: " + data["ans"]
       })
   }
   
@@ -37,8 +43,8 @@
 
 
 <body>
-<div id="editor"> def main():
-    return sum(range(1,100))
+<div id="text">
+{q_text}
 </div>
 
 <div id="button">
@@ -49,19 +55,22 @@
 </div>
 
 <div id="feedback">
+  <p>{ans} </p>
   {feedback_text} 
 </div> 
+
+<div id="wrapper">
+<div id="editor"> def main():
+    "Skriv koden din her"
+</div>
+</div>
+
   <div>
     <style type="text/css" media="screen">
           #editor {
               position: absolute;
-              top: 100px;
-              right: 100px;
-              bottom: 100px;
-              left: 100px;
-              width: 50%;
+              width: 100%;
               height: 50%;
-              align-content: center;
           }
           #button {
             position: absolute;
@@ -69,8 +78,20 @@
           #feedback {
             position: absolute;
             border: 5px;
-            right: 300px;
+            right: 250px;
+            bottom: 25px;
+          } 
+          #wrapper {
+            position: absolute;
+            width : 500px;
+            height: 500px;
+            right: 100px;
+            top: 70px;
           }
+          #text { 
+            bottom: 50px;
+          }
+      
       </style>
     <script src="https://pagecdn.io/lib/ace/1.4.6/ace.js" type="text/javascript" charset="utf-8"></script>
     
@@ -78,7 +99,7 @@
           var editor = ace.edit("editor");
           editor.setTheme("ace/theme/monokai");
           editor.session.setMode("ace/mode/python");
-          editor.resize()
+          //editor.resize()
     </script>
   </div>
 </body>

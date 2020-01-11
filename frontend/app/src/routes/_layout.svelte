@@ -1,6 +1,4 @@
-<script>
-  export let segment;
-</script>
+
 
 <style>
   main {
@@ -16,7 +14,8 @@
     background-color: rgb(231, 231, 231);
   }
 </style>
-
+<header></header>
 <main>
   <slot/>
 </main>
+<footer></footer>

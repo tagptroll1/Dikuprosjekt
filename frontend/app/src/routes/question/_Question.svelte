@@ -14,6 +14,6 @@
   <MultiChoice />
 {:else if $question.type === 'fillin'}
   <FillIn />
-{:else if $question.type === 'unittest' || $question.type === 'coderunner'}
+{:else if $question.type === 'unittest'}
   <UnitTest />
 {/if}
