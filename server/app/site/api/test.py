@@ -1,5 +1,5 @@
 import types
-
+import time
 
 def look_for_function(module, function, func_name):
     try:
@@ -19,9 +19,27 @@ def main(code, tests):
         if isinstance(getattr(tests, a), types.FunctionType)
     ]
 
+
     for i in functions:
         functions_c.append(look_for_function(tests, functions, i))
+
 
     ans = code.main()
 
     return tests.test(ans)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

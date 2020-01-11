@@ -2,10 +2,9 @@ from typing import List
 
 class UnitTestModel:
     TABLE = "questions"
-    TYPE = "coderunner"
+    TYPE = "unittest"
 
     tags: List
     difficulty: int
     question_text: str
-    question_answer: str
-    unit_tests: List
+    unit_test: str

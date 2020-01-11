@@ -15,6 +15,7 @@ flask = "*"
 flask-restful = "*"
 flask-cors = "*"
 pymongo = "*"
+interruptingcow = "*"
 
 [requires]
 python_version = "3.7"

@@ -8,7 +8,6 @@ class UnitTest(ApiBaseDefault):
     model = UnitTestModel
 
 
-
 endpoints = {
     "/api/v1/unittest": UnitTest
 }
