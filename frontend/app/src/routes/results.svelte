@@ -19,6 +19,7 @@
     goto("/");
   }
 
+
   let totalCorrect = 0;
   let datapack = init();
 
@@ -49,6 +50,7 @@
     await postData(dataset);
     let feedbacks = await getResponses(ids);
 
+    
     $questions.forEach((q, i) => {
       const feedback_set = feedbacks.find(f => f.question_id === q._id) || {};
       let feedback = feedback_set[q.answer.selected_answer];

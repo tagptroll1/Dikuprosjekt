@@ -22,8 +22,7 @@ class FeedbackById(ApiBase):
     @protected
     @json_serialize
     def post(self, id_):
-        print("her")
-
+        ...
 
     @protected
     @json_serialize

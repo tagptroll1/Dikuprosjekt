@@ -15,3 +15,4 @@ class QuestionDataModel:
     selected_answer: str
     correct: bool
     time_spent: int  # seconds
+    tries: int  # num of tries
