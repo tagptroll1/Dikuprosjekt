@@ -37,12 +37,14 @@
     const return_value = [];
 
     $questions.forEach(q => {
+      console.log(q)
       ids.push(q._id);
       dataset.questions.push({
         question_id: q._id,
         selected_answer: q.answer.selected_answer,
         correct: q.answer.correct,
-        time_spent: q.timeSpent
+        time_spent: q.timeSpent,
+        tries: q.answer.tries
       });
       if (q.answer.correct) totalCorrect++;
     });

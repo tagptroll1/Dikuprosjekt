@@ -3,12 +3,13 @@ import fetch from "node-fetch";
 export async function post(req, res) {
     try {
         const body = JSON.stringify(req.body);
-        const url = `${process.env.API_URL}/api/v1/question_feedback/set`;
-
+        //const url = `${process.env.API_URL}/api/v1/question_feedback/set`;
+        const url = "http://localhost:5000/api/v1/question_feedback/set";
+        
         const resp = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body,
+            body
         });
 
         const json = await resp.json();
