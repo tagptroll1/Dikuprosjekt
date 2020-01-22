@@ -15,8 +15,4 @@ class QuestionDataModel:
     selected_answer: str
     correct: bool
     time_spent: int  # seconds
-
-class Testnes:
-    TABLE = "code"
-
-    code: str
+    tries: int  # num of tries

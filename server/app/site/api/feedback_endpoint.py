@@ -18,6 +18,12 @@ class Feedback(ApiBaseDefault):
 
 
 class FeedbackById(ApiBase):
+
+    @protected
+    @json_serialize
+    def post(self, id_):
+        ...
+
     @protected
     @json_serialize
     def delete(self, id_):
@@ -32,7 +38,7 @@ class FeedbackById(ApiBase):
         getted = self.database.find_one(FeedbackModel.TABLE, feedback_id=id_)
         if getted:
             return getted, 200
-        return self.database.find_one(FeedbackModel.TABLE, _id=id_)
+        return {"message": "No feedback for this id"}, 400
 
 
 class QuestionFeedback(ApiBase):

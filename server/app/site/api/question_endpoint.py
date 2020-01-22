@@ -171,6 +171,14 @@ class QuestionSet(ApiBase):
 class QuestionSetById(ApiBase):
     @protected
     @json_serialize
+    def get(self, id_):
+        getted = self.database.find_one("questions", _id=id_)
+        if getted:
+            return getted, 200
+        return {"message": "No feedback for this id"}, 400
+
+    @protected
+    @json_serialize
     def delete(self, id_):
         delete_result = self.database.delete("questions", _id=id_)
 
