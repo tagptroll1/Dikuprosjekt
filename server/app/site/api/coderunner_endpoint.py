@@ -1,6 +1,6 @@
 from app.site.api.ApiBase import ApiBase, ApiBaseDefault, validate_body
 from app.site.models.session_data import DataModel, Testnes
-from app.site.api.test import main
+from app.site.api.unittest_runner import main
 import types
 
 from flask import request
@@ -18,10 +18,12 @@ class CoderunnerEndpoint(ApiBaseDefault):
 
         code_module = types.ModuleType("code", code)
         test_module = types.ModuleType("tests", tests)
+
         exec(code, code_module.__dict__)
         exec(tests, test_module.__dict__)
 
         feedback, ans = main(code_module, test_module)
+
         return jsonify(fd=feedback, ans=ans)
 
 

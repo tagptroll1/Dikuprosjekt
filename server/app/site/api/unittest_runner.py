@@ -1,5 +1,6 @@
 import types
-import time
+import sys
+
 
 def look_for_function(module, function, func_name):
     try:
@@ -23,10 +24,14 @@ def main(code, tests):
     for i in functions:
         functions_c.append(look_for_function(tests, functions, i))
 
+    try:
+        ans = code.main()
+        if ans is not None:
+            return tests.test(ans), ans
+    except Exception as err:
+        return 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno) + "\n" + str(type(err).__name__) + "\n" + str(err), "None"
 
-    ans = code.main()
-
-    return tests.test(ans)
+    return "Koden din må returnere noe!", "None"
 
 
 

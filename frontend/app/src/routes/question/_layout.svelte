@@ -94,7 +94,7 @@
     padding: 10px 20px;
 
     background-color: rgb(217, 255, 247);
-    box-shadow: 0 0 3px -2px black;
+    box-shadow: 0 0 3px -2px bla  ck;
     text-align: center;
 
     align-items: center;
@@ -111,6 +111,7 @@
 
   .q{
     max-width: 800px;
+    height: 300px;
   }
 </style>
 
