@@ -7,4 +7,5 @@ class UnitTestModel:
     tags: List
     difficulty: int
     question_text: str
+    question_answer: str
     unit_test: str

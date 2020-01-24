@@ -1,5 +1,5 @@
 from app.site.api.ApiBase import ApiBase, ApiBaseDefault, validate_body
-from app.site.models.session_data import DataModel, Testnes
+from app.site.models.session_data import DataModel
 from app.site.api.unittest_runner import main
 import types
 
@@ -9,7 +9,7 @@ from flask import jsonify
 
 class CoderunnerEndpoint(ApiBaseDefault):
     """api/v1/coderunner"""
-    model = Testnes
+    model = DataModel
 
     def post(self):
         data = request.get_json()
@@ -18,6 +18,7 @@ class CoderunnerEndpoint(ApiBaseDefault):
 
         code_module = types.ModuleType("code", code)
         test_module = types.ModuleType("tests", tests)
+
 
         exec(code, code_module.__dict__)
         exec(tests, test_module.__dict__)

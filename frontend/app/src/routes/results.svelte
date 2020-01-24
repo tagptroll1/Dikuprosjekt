@@ -138,8 +138,9 @@
             out:fly={{ y: -100, duration: 100 }}
             in:fly={{ y: -100, duration: 500 }}>
             <p>{quest.question_text}</p>
-            <Codeblock code={quest.question_code.replace('@@', '[ ]')} />
-
+            {#if quest.type != "unittest"} 
+              <Codeblock code={quest.question_code.replace('@@', '[ ]')} />
+            {/if}
             <p>
               You selected:
               <code>{quest.answer.selected_answer || 'Nothing'}</code>

@@ -24,8 +24,10 @@ def main(code, tests):
     for i in functions:
         functions_c.append(look_for_function(tests, functions, i))
 
+    print(functions_c)
+
     try:
-        ans = code.main()
+        ans = code.my_function()
         if ans is not None:
             return tests.test(ans), ans
     except Exception as err:

@@ -89,7 +89,7 @@
   article .show {
     display: flex;
 
-    position: absolute;
+    position: block;
     margin: 0 auto;
     padding: 10px 20px;
 
@@ -113,6 +113,7 @@
     max-width: 800px;
     height: 300px;
   }
+
 </style>
 
 <section>
@@ -135,6 +136,13 @@
     <slot />
   </section>
 </article>
+<br> <!-- Bedre fiks :)?-->
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <section>
   <!-- Buttons -->
   {#if $index > 0}
