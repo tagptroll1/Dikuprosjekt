@@ -113,7 +113,7 @@
     width: 100%;
   }
 
-  .q{
+  .q {
     max-width: 800px;
   }
 
