@@ -8,6 +8,7 @@
   import index from "../../stores/index";
   import question from "../../stores/question";
   import questions from "../../stores/questions";
+  import showFeedback from "../../stores/feedback";
 
   // Components 
   import ProgressBar from "./_components/_ProgressBar.svelte";
@@ -48,7 +49,10 @@
 
   function next() {
     ensureAnswer();
-    if ($index < $questions.length) $index++;
+    if ($index < $questions.length) {
+      $index++;
+      $showFeedback = false
+    }
   }
 
   function prev() {
@@ -137,6 +141,10 @@
   </section>
 </article>
 <br> <!-- Bedre fiks :)?-->
+<br>
+<br>
+<br>
+<br>
 <br>
 <br>
 <br>

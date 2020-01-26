@@ -10,7 +10,7 @@
     
     async function postCode(data) {
       try {
-          const resp = await fetch("/api/coderunner", {
+          const resp = await fetch(`${process.env.API_URL}/api/v1/coderunner`, {
               method: "POST",
               headers: {
                   "Content-Type": "application/json",
@@ -24,7 +24,9 @@
       }
     }
   let feedback_text = ""
+  let ans_text = ""
   let ans = ""
+
 
   function handleClick() {
       if (!editor.getValue().includes("return")) {
@@ -40,7 +42,7 @@
         feedback_text = data["fd"]
         ans = data["ans"]
         if (data["ans"] != "None") {
-          ans = "Koden din evaluerte til: " + ans
+          ans_text = "Koden din evaluerte til: " + ans
         }
         const correct = ans === $question.question_answer;
 
@@ -75,7 +77,7 @@
 <button on:click={() => handleClick()}>Run</button>
 
 <div id="feedback">
-  <p> {ans} </p>
+  <p> {ans_text} </p>
   <p>{feedback_text} </p>
 </div>
     <script>

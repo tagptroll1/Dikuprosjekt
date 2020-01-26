@@ -5,6 +5,7 @@
   import question from "../../../stores/question";
   import questions from "../../../stores/questions";
   import index from "../../../stores/index";
+  import showFeedback from "../../../stores/feedback";
     
 
 $: selected = $question.answer && $question.answer.selected_answer;
@@ -13,32 +14,44 @@ let data = init();
 let feedback_index = {}
 let feedback;
 
-export async function init() {
+async function init() {
     data = await getResponses([$question._id])
+
     for(var key in data[0]) {
         feedback_index[key] = 0
     }
 }
 
 let showCorrect = false;
-let showFeedback = false;
 let correct_ans = false;
 
-function handleClick() {
+function handleClick() {    
+    selected = $question.answer.selected_answer;
     let correct = selected === $question.question_answer
+    correct_ans = correct
 
+    // No feedback exists for this question, just showing default values
+    if (data.length == 0) {
+        console.log("There is no feedback for this question")
+        showCorrect = true
+        $showFeedback = true
+        if (correct) {
+            feedback = "Riktig!"
+            return
+        } else {
+            feedback = "Feil svar!"
+            return
+        }
+    }
     if (feedback_index[selected] >= data[0][selected].length) {
         feedback_index[selected] = data[0][selected].length - 1
         feedback = data[0][selected][feedback_index[selected]];
-
     } else {
         feedback = data[0][selected][feedback_index[selected]];
         feedback_index[selected]++
     }
-    showFeedback = true
+    $showFeedback = true
     showCorrect = true
-
-    correct_ans = correct
 
     if ($questions[$index].answer.tries) {
         $questions[$index].answer.tries++;
@@ -63,14 +76,10 @@ function handleClick() {
     loading...
 {:then}
     <button on:click={handleClick}> Go </button>
-    {#if showCorrect}
-        <h2>
+    {#if $showFeedback}
+        {feedback}
             <span class:correct={correct_ans}>
                 {correct_ans ? '✔' : '✖'}
             </span>
-        </h2>
-    {/if}
-    {#if showFeedback}
-        {feedback}
     {/if}
 {/await}

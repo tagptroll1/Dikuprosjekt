@@ -9,13 +9,20 @@
     let count = 0;
     while ($questions.length <= 0 && process.browser && count < 10) {
       try {
-        const resp = await fetch("/api/questions?limit=10"); // Change this to get different questions
+        const resp = await fetch("http://127.0.0.1:5000/api/v1/questions"); // Change this to get different questions
         if (!resp.ok) {
           continue;
         }
 
+        // multi -> drop != unit
+        // drop != unit 
+        // unit -> multi -> drop
+        // multi != unit
+
         const json = await resp.json();
         $questions = json;
+
+        console.log($questions)
 
         if (json.length > 0) {
           return json;

@@ -5,7 +5,7 @@
   import user from "../../../stores/user";
   import hljs from "highlight.js/lib/highlight";
   import python from "highlight.js/lib/languages/python";
-  import { afterUpdate } from "svelte";
+  import { afterUpdate, onMount } from "svelte";
 
   //$: selected = $question.answer && $question.answer.selected_answer;
 
@@ -17,6 +17,7 @@
   let piece1 = "";
   let piece2 = "";
   $: pieces = $question.question_code.split("@@");
+
   
   function disp() {
     const correct = selected == $question.question_answer
@@ -30,11 +31,11 @@
     
   }
 
-  afterUpdate(() => {
+  onMount(() => {
     if (prev_id !== $question._id && !$question.answer) {
       selected = '';
     }
-
+    
     piece1 = hljs.highlight("python", pieces[0]);
     piece2 = hljs.highlight("python", pieces[1]);
     prev_id = $question._id;

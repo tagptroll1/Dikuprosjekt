@@ -26,10 +26,12 @@
   p{
     margin: 0;
     color: black;
-    padding: 5px 20px;
+    padding: 10px 20px;
+    font-size: 20px;
   }
   div{
     background-color: #ffffff;
+    margin-bottom: 20px;
   }
 </style>
 <div>

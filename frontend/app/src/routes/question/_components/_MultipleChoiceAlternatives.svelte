@@ -8,7 +8,6 @@
 
   function handleClick(option) {
     selected = option;
-
     const correct = selected === $question.question_answer;
 
     $questions[$index].answer = {
