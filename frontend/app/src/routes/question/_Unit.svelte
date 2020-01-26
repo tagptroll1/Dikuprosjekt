@@ -7,26 +7,12 @@
   import index from "../../stores/index";
   import { onMount, onDestroy } from "svelte";
   import QuestionText from "./_components/_QuestionText.svelte";
-    
-    async function postCode(data) {
-      try {
-          const resp = await fetch(`${process.env.API_URL}/api/v1/coderunner`, {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify(data),
-          });
-          return await resp.json();
+  
+  import { runCode } from "../api/coderunner"
 
-      } catch (err) {
-          console.log(`Data post failed ${err}`);
-      }
-    }
   let feedback_text = ""
   let ans_text = ""
   let ans = ""
-
 
   function handleClick() {
       if (!editor.getValue().includes("return")) {
@@ -38,7 +24,7 @@
         code: editor.getValue(),
         unit_tests: $questions[$index].unit_test
       };
-      postCode(dataset).then((data) => {
+      runCode(dataset).then((data) => {
         feedback_text = data["fd"]
         ans = data["ans"]
         if (data["ans"] != "None") {

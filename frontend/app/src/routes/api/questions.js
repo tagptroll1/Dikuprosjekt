@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import queryString from "query-string";
 
 export async function get(req, res) {
     const url = new URL(process.env.API_URL);
