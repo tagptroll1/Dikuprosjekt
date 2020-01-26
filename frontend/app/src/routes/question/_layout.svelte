@@ -115,7 +115,6 @@
 
   .q{
     max-width: 800px;
-    height: 300px;
   }
 
 </style>
