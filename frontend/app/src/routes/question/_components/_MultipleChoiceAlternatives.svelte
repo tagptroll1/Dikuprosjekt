@@ -10,12 +10,21 @@
     selected = option;
     const correct = selected === $question.question_answer;
 
+    let tries;
+
+    if ($questions[$index].answer) {
+        tries = $questions[$index].answer.tries + 1
+    } else {
+        tries = 1
+    }
+
     $questions[$index].answer = {
       user: $user,
       question_id: $question._id,
       selected_answer: selected,
       correct: correct,
-      ended_question: new Date(Date.now()).toString()
+      ended_question: new Date(Date.now()).toString(),
+      tries: tries
     };
 
     const dispatch_obj = {
