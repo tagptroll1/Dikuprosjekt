@@ -9,6 +9,8 @@
 </script>
 
 <QuestionText />
-<Codeblock code={$question.question_code} />
+{#if $question.question_code.length > 2}
+  <Codeblock code={$question.question_code} />
+{/if}
 <MultipleChoiceAlternatives />
 <Feedback />
