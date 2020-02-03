@@ -29,7 +29,6 @@ function handleClick() {
     let correct = selected === $question.question_answer
     correct_ans = correct
 
-    console.log($question)
     // No feedback exists for this question, just showing default values
     if (data.length == 0 || data[0][selected] == null) {
         console.log("There is no feedback for this question")

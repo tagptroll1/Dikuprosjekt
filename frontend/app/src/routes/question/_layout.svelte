@@ -114,7 +114,7 @@
   }
 
   .q {
-    max-width: 800px;
+    max-width: 500px;
   }
 
 </style>
@@ -139,17 +139,6 @@
     <slot />
   </section>
 </article>
-<br> <!-- Bedre fiks :)?-->
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 <section>
   <!-- Buttons -->
   {#if $index > 0}
