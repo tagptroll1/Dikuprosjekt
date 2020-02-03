@@ -8,15 +8,14 @@
   import showFeedback from "../../../stores/feedback";
     
 
-$: selected = $question.answer && $question.answer.selected_answer;
+$: selected = $question.answer && $question.answer.selected_answer && handleClick();
+$: data = init() && $question._id
 
-let data = init();
 let feedback_index = {}
 let feedback;
 
 async function init() {
     data = await getResponses([$question._id])
-
     for(var key in data[0]) {
         feedback_index[key] = 0
     }
@@ -25,11 +24,12 @@ async function init() {
 let showCorrect = false;
 let correct_ans = false;
 
-function handleClick() {    
+function handleClick() {
     selected = $question.answer.selected_answer;
     let correct = selected === $question.question_answer
     correct_ans = correct
 
+    console.log($question)
     // No feedback exists for this question, just showing default values
     if (data.length == 0 || data[0][selected] == null) {
         console.log("There is no feedback for this question")
@@ -76,11 +76,11 @@ function handleClick() {
 {#await data}
     loading...
 {:then}
-    <button on:click={handleClick}> Go </button>
+    <!-- <button on:click={handleClick}> Go </button> -->
     {#if $showFeedback}
+        <span class:correct={correct_ans}>
+            {correct_ans ? '✔' : '✖'}
+        </span>
         {feedback}
-            <span class:correct={correct_ans}>
-                {correct_ans ? '✔' : '✖'}
-            </span>
     {/if}
 {/await}
