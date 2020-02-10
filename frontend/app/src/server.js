@@ -9,6 +9,7 @@ import * as sapper from "@sapper/server";
 import * as expressWinston from "express-winston";
 import * as winston from "winston";
 
+winston.defaults.transports.console.timestamp = true;
 
 const FileStore = sessionFileStore(session);
 
@@ -92,6 +93,15 @@ app
         sirv("static", { dev }),
         sapper.middleware({})
     )
+    .use(expressWinston.errorLogger({
+        transports: [
+            new winston.transports.Console()
+        ],
+        format: winston.format.combine(
+            winston.format.colorize(),
+            winston.format.json()
+        )
+    }))
     .listen(PORT, err => {
         if (err) console.log("error", err);
     });
