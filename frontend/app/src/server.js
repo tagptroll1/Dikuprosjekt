@@ -9,8 +9,6 @@ import * as sapper from "@sapper/server";
 import * as expressWinston from "express-winston";
 import * as winston from "winston";
 
-winston.defaults.transports.console.timestamp = true;
-
 const FileStore = sessionFileStore(session);
 
 const { PORT, NODE_ENV } = process.env;
@@ -45,6 +43,7 @@ winston.loggers.add("file-logger", {
     format: winston.format.json(),
     defaultMeta: { service: "user-service" },
     meta: true,
+    timestamp: true,
     transports: [
         new winston.transports.File({ filename: "error.log", level: "error" }),
         new winston.transports.File({ filename: "meta.log" }),
@@ -54,6 +53,7 @@ winston.loggers.add("file-logger", {
 if (dev) {
     winston.loggers.add("dev-logger", {
         format: winston.format.simple(),
+        timestamp: true,
         transports: [
             new winston.transports.Console({
                 level: "debug",
@@ -70,6 +70,7 @@ app
             meta: false,
             msg: "HTTP {{res.statusCode}} {{req.method}} {{req.url}} {{res.responseTime}}ms",
             expressFormat: false,
+            timestamp: true,
             colorize: true,
             ignoreRoute: ({ path }) => ignoredPaths.includes(path) || path.slice(0, 7) === "/client",
         })
@@ -78,6 +79,7 @@ app
         expressWinston.logger({
             level: "info",
             format: winston.format.json(),
+            timestamp: true,
             defaultMeta: { service: "user-service" },
             transports: [
                 new winston.transports.File({ filename: "error.log", level: "error" }),
@@ -94,6 +96,7 @@ app
         sapper.middleware({})
     )
     .use(expressWinston.errorLogger({
+        timestamp: true,
         transports: [
             new winston.transports.Console()
         ],
