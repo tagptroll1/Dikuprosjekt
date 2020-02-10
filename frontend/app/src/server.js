@@ -4,10 +4,9 @@ import express from "express";
 import session from "express-session";
 import bodyParser from "body-parser";
 import sessionFileStore from "session-file-store";
-import * as sapper from "@sapper/server";
 
-import * as expressWinston from "express-winston";
 import * as sapper from "@sapper/server";
+import * as expressWinston from "express-winston";
 import * as winston from "winston";
 
 
@@ -19,7 +18,7 @@ const dev = NODE_ENV === "development";
 
 const app = express();
 
-const ignoredPaths = ["/auth/callback", "/favicon.png", "/global.css", "/service-worker.js"];
+const ignoredPaths = ["/favicon.png", "/global.css", "/service-worker.js"];
 
 
 const sess = {
@@ -38,17 +37,6 @@ if (app.get("env") === "production") {
     app.set("trust proxy", 1);
     sess.cookie.secure = true;
 }
-
-app.use(bodyParser.json())
-    .use(session(sess))
-    .use(
-        compression({ threshold: 0 }),
-        sirv("static", { dev }),
-        sapper.middleware({})
-    )
-    .listen(PORT, err => {
-        if (err) console.log("error", err);
-    });
 
 // Setup loggers
 winston.loggers.add("file-logger", {
@@ -97,3 +85,13 @@ app
             ignoreRoute: ({ path }) => ignoredPaths.includes(path) || path.slice(0, 7) === "/client",
         })
     )
+    .use(bodyParser.json())
+    .use(session(sess))
+    .use(
+        compression({ threshold: 0 }),
+        sirv("static", { dev }),
+        sapper.middleware({})
+    )
+    .listen(PORT, err => {
+        if (err) console.log("error", err);
+    });
