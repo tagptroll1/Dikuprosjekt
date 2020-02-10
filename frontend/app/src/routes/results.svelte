@@ -153,6 +153,7 @@
               </p>
             {/if}
             {#if quest.feedback}
+              <!-- Gjøre det tydeligere at dette er feedback -->
               <p>{quest.feedback}</p>
             {/if}
           </section>
