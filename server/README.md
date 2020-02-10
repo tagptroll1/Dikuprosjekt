@@ -1,4 +1,4 @@
-# Slangeuib REST API
+# Slangeuib REST API - v0.5
 
 ## Installation
 ### Docker
