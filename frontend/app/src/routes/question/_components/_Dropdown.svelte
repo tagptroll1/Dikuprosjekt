@@ -18,6 +18,13 @@
   let piece2 = "";
   $: pieces = $question.question_code.split("@@");
 
+  let tries;
+
+  if ($questions[$index].answer) {
+        tries = $questions[$index].answer.tries + 1
+    } else {
+        tries = 1
+  }
   
   function disp() {
     const correct = selected == $question.question_answer
@@ -26,7 +33,8 @@
       question_id: $question._id,
       selected_answer: selected,
       correct: correct,
-      ended_question: new Date(Date.now()).toString()
+      ended_question: new Date(Date.now()).toString(),
+      tries: tries
     };
     
   }
