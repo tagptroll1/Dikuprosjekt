@@ -9,7 +9,7 @@
     let count = 0;
     while ($questions.length <= 0 && process.browser && count < 10) {
       try {
-        const resp = await fetch("api/questions?tags=kap6"); // Change this to get different questions
+        const resp = await fetch("api/questions?tags=kap7"); // Change this to get different questions
         if (!resp.ok) {
           continue;
         }
