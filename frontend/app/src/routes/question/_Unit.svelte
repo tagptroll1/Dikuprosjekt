@@ -5,7 +5,6 @@
   import index from "../../stores/index";
   import { onMount, onDestroy } from "svelte";
   import QuestionText from "./_components/_QuestionText.svelte";
-
   let feedback_text = "";
   let ans_text = "";
   let ans = "";
@@ -16,13 +15,15 @@
       return;
     } else {
       const dataset = {
-        end_time: new Date(Date.now()),
         code: editor.getValue(),
-        unit_tests: $questions[$index].unit_test
+        tests: $questions[$index].question_testcases,
+        answer_code: $questions[$index].question_answer_code,
+        function_name: $questions[$index].function_name
       };
 
       fetch("api/coderunner", {
         body: JSON.stringify(dataset),
+        method: "POST",
         headers: {
           "Content-Type": "application/json"
         }
@@ -50,7 +51,7 @@
 
 <QuestionText />
 
-<div id="editor">def my_function(): # Skriv koden din her</div>
+<div id="editor">def snitt(a, b): return 2</div>
 
 <div>
   <style type="text/css" media="screen">
