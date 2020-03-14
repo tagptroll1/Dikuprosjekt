@@ -20,7 +20,7 @@ class CoderunnerEndpoint(ApiBaseDefault):
 
         obj = main(code, tests, code_ans, function_name)
 
-        return jsonify(data=obj)
+        return jsonify(obj)
 
 
 endpoints = {

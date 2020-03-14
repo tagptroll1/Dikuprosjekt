@@ -5,15 +5,22 @@
   import index from "../../stores/index";
   import { onMount, onDestroy } from "svelte";
   import QuestionText from "./_components/_QuestionText.svelte";
-  let feedback_text = "";
-  let ans_text = "";
-  let ans = "";
+
+  let studentAns = []
+  let ans = []
+  
+  let mustReturn = false;
+  let ran = false;
+  let allCorrect = false;
+  let showSolution = false;
+  let showHint = false;
 
   function handleClick() {
     if (!editor.getValue().includes("return")) {
-      feedback_text = "Your code must return something";
+      mustReturn = true;
       return;
     } else {
+      mustReturn = false;
       const dataset = {
         code: editor.getValue(),
         tests: $questions[$index].question_testcases,
@@ -30,46 +37,122 @@
       })
         .then(data => data.json())
         .then(data => {
-          feedback_text = data["fd"];
-          ans = data["ans"];
-          if (data["ans"] != "None") {
-            ans_text = "Koden din evaluerte til: " + ans;
-          }
-          const correct = ans === $question.question_answer;
+          ran = true;
+          studentAns = data.student_ans;
+          ans = data.ans;
+          allCorrect = data.all_same;
+
+          const tries = ($questions[$index].answer ? $questions[$index].answer.tries + 1 : 0)
+          const num_correct = ans.filter(element => studentAns.includes(element)).length;
 
           $questions[$index].answer = {
             user: $user,
             question_id: $question._id,
-            selected_answer: ans,
-            correct: correct,
-            ended_question: new Date(Date.now()).toString()
+            selected_answer: editor.getValue(),
+            correct: allCorrect,
+            show_solution: showSolution,
+            tries: tries,
+            num_tests: $questions[$index].question_testcases.length,
+            num_correct: num_correct
           };
         });
     }
   }
 </script>
 
+<style>
+  table {
+  border-collapse: collapse;
+  margin-bottom: 50px;
+}
+
+  #container {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  #feedback {
+    width:30%;
+    padding-left: 50px;
+  }
+
+   td {
+    border: 1px solid black;
+    padding: 5px;
+  }
+</style>
+
+
 <QuestionText />
 
-<div id="editor">def snitt(a, b): return 2</div>
+<div id="container">
 
-<div>
+<div id="editor">{$question.question_answer_code.split(":")[0]+":" + "\n"}
+     
+</div>
+
   <style type="text/css" media="screen">
     #editor {
       position: relative;
-      width: 100%;
-      height: 90%;
+      width: 70%;
+      height: 300px;
     }
   </style>
-  <button on:click={() => handleClick()}>Run</button>
+
 
   <div id="feedback">
-    <p>{ans_text}</p>
-    <p>{feedback_text}</p>
+    {#if mustReturn}
+      <span>Your code must return a value</span>
+    {/if}     
+
+     <table>
+        {#if ran}
+        <th colspan="0"> 
+            Expected
+        </th>
+        <th colspan="1">
+          Run
+        </th>
+      {#each ans as a, i}
+        <tr>
+          <td>
+           <span> {$question.function_name}({$question.question_testcases[i][0]}, {$question.question_testcases[i][1]}) &#8594; {a}</span>
+          </td>
+          <td style="width: 20px;">
+            <span> {studentAns[i]} </span> 
+          </td>
+          <td>
+            <span>{#if studentAns[i] === a} OK {:else} X {/if}</span>
+          </td>
+         {#if studentAns[i] === a}
+            <td style="background-color: green; width: 20px;"></td> 
+          {:else}
+            <td style="background-color: red; width: 20px"></td> 
+          {/if}
+        </tr>
+     {/each}
+             
+             {/if}
+ 
+     </table>
+     
+     {#if allCorrect}
+        <h2>All Correct</h2>
+      {/if}
+      {#if showSolution}
+        <span>{$questions[$index].question_answer_code}</span>
+      {/if}
   </div>
   <script>
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
     editor.session.setMode("ace/mode/python");
   </script>
+
 </div>
+<button on:click={() => handleClick()}>Run</button>
+
+{#if ran}
+  <button on:click={() => showSolution = true}>Show solution</button>
+{/if}
+

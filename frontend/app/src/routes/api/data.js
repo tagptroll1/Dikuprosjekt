@@ -2,6 +2,7 @@ import fetch from "node-fetch";
 
 export async function post(req, res) {
     const body = req.body;
+    console.log(body)
     try {
         body.questions.forEach((answer, i) => {
             if (answer.selected_answer === null) {
@@ -9,7 +10,8 @@ export async function post(req, res) {
                 body.questions[i] = answer;
             }
         });
-        const url = `${process.env.API_URL}/api/v1/dataset`;
+        //const url = `${process.env.API_URL}/api/v1/dataset`;
+        const url = new URL("http://127.0.0.1:5000/api/v1/dataset");
 
         await fetch(url, {
             method: "POST",
@@ -26,7 +28,8 @@ export async function post(req, res) {
 
 export async function get(req, res) {
     try {
-        const response = await fetch(`${process.env.API_URL}/api/v1/data`);
+        //const response = await fetch(`${process.env.API_URL}/api/v1/data`);
+        const response = new URL("http://127.0.0.1:5000/api/v1/data");
         const json = await response.json();
         res.json(json);
     } catch (error) {
