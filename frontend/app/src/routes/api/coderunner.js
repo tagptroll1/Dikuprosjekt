@@ -5,7 +5,7 @@ export async function post(req, res) {
   const { body } = req;
 
   try {
-    const resp = await fetch(new URL("http://127.0.0.1:5000/api/v1/coderunner"), {
+    const resp = await fetch(`${process.env.API_URL}/api/v1/data`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
