@@ -108,7 +108,7 @@
     }
   </style>
 
-
+  {#if $question.type === "unittest"}
   <div id="feedback">
     {#if mustReturn}
       <span>Your code must return a value</span>
