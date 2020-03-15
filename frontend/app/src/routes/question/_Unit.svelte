@@ -163,7 +163,7 @@
     editor.setTheme("ace/theme/monokai");
     editor.session.setMode("ace/mode/python");
   </script>
-
+{/if}
 </div>
 <button on:click={() => handleClick()}>Run</button>
 
