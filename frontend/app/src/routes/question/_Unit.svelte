@@ -14,6 +14,11 @@
   let allCorrect = false;
   let showSolution = false;
   let showHint = false;
+  let codeSignature;
+
+  if ($question.type === "unittest") {
+      codeSignature =$question.question_answer_code.split(":")[0]+":" + "\n"
+  }
 
   function handleClick() {
     if (!editor.getValue().includes("return")) {
@@ -87,7 +92,9 @@
 
 <div id="container">
 
-<div id="editor">{$question.question_answer_code.split(":")[0]+":" + "\n"}
+
+<div id="editor">{codeSignature}
+
      
 </div>
 
