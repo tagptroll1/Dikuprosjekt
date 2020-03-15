@@ -2,8 +2,8 @@ import fetch from "node-fetch";
 import queryString from "query-string";
 
 export async function get(req, res) {
-    //const url = new URL(`${process.env.API_URL}/api/v1/questions`);
-    const url = new URL("http://127.0.0.1:5000/api/v1/questions");
+    const url = new URL(`${process.env.API_URL}/api/v1/questions`);
+    //const url = new URL("http://feedback.uib.no:5555/api/v1/questions");
     const query = queryString.stringify(req.query);
     url.search = query;
 

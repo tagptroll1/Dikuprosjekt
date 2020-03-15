@@ -10,6 +10,14 @@
     selected = option;
     const correct = selected === $question.question_answer;
 
+    let tries;
+
+    if ($questions[$index].answer) {
+        tries = $questions[$index].answer.tries + 1
+    } else {
+        tries = 1
+    }
+
     $questions[$index].answer = {
       user: $user,
       question_id: $question._id,

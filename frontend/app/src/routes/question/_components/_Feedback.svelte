@@ -52,12 +52,6 @@ function handleClick() {
     }
     $showFeedback = true
     showCorrect = true
-
-    if ($questions[$index].answer.tries) {
-        $questions[$index].answer.tries++;
-    } else {
-        $questions[$index].answer.tries = 1
-    }    
 }
 </script>
 
