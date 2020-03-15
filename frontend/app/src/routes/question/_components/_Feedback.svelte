@@ -30,7 +30,7 @@ function handleClick() {
     correct_ans = correct
 
     // No feedback exists for this question, just showing default values
-    if (data.length == 0 || data[0][selected] == null) {
+    if (!data || data[0][selected] == null) {
         console.log("There is no feedback for this question")
         showCorrect = true
         $showFeedback = true
