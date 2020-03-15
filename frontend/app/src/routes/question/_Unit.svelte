@@ -47,6 +47,8 @@
           ans = data.ans;
           allCorrect = data.all_same;
 
+          console.log(data)
+
           const tries = ($questions[$index].answer ? $questions[$index].answer.tries + 1 : 0)
           const num_correct = ans.filter(element => studentAns.includes(element)).length;
 

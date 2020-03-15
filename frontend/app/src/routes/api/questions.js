@@ -3,6 +3,7 @@ import queryString from "query-string";
 
 export async function get(req, res) {
     const url = new URL(`${process.env.API_URL}/api/v1/questions`);
+
     const query = queryString.stringify(req.query);
     url.search = query;
 

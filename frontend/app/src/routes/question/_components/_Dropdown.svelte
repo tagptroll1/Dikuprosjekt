@@ -16,7 +16,13 @@
   let prev_id;
   let piece1 = "";
   let piece2 = "";
-  $: pieces = $question.question_code.split("@@");
+
+  let pieces;
+
+  if ($question.type === "dropdown") {
+     pieces = $question.question_code.split("@@");
+  }
+
 
   let tries;
 
@@ -55,9 +61,11 @@
   <code>
     {@html piece1.value} <select bind:value={selected} on:change={disp}>
       <option value="" />
+      {#if $question.type === "dropdown"}
       {#each $question.alternatives as item}
         <option value={item}>{item}</option>
       {/each}
+      {/if}
     </select> {@html piece2.value || ''}
   </code>
 </pre>

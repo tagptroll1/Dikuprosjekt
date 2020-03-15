@@ -2,10 +2,11 @@ import fetch from "node-fetch";
 
 
 export async function post(req, res) {
-  const { body } = req;
-
+  const { body } = req;s
+  const url = new URL(`${process.env.API_URL}/api/v1/coderunner`);
+  
   try {
-    const resp = await fetch(`${process.env.API_URL}/api/v1/coderunner`, {
+    const resp = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
