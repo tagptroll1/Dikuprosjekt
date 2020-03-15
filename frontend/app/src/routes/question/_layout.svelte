@@ -17,15 +17,6 @@
   let areYouSure = false;
   let interval;
   
-  // onMount(() => {
-  //   interval = setInterval(() => {
-  //     if ($question.timeSpent === undefined) {
-  //       $questions[$index].timeSpent = 0;
-  //     } else {
-  //       $questions[$index].timeSpent++;
-  //     }
-  //   }, 1000);
-  // });
 
   onDestroy(() => {
     if (interval) {
@@ -51,12 +42,15 @@
     ensureAnswer();
     if ($index < $questions.length) {
       $index++;
+      $showFeedback = false;
     }
   }
 
   function prev() {
     ensureAnswer();
     if ($index > 0) $index--;
+          $showFeedback = false;
+
   }
 
   function submit(e, force = false) {
