@@ -35,13 +35,13 @@ def main(code, tests, code_ans, func_name):
 
         for i in tests:
             try:
-                if len(tests[0] == 1):
+                if len(tests[0]) == 1:
                     student_ans.append(method_to_call_student(i[0]))
                     ans.append(method_to_call_ans(i[0]))
-                elif len(tests[0] == 2):
+                elif len(tests[0]) == 2:
                     student_ans.append(method_to_call_student(i[0], i[1]))
                     ans.append(method_to_call_ans(i[0], i[1]))
-                elif len(tests[3] == 3):
+                elif len(tests[3]) == 3:
                     student_ans.append(method_to_call_student(i[0], i[1], i[2]))
                     ans.append(method_to_call_ans(i[0], i[1], i[2]))
 
