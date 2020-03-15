@@ -51,7 +51,6 @@
     ensureAnswer();
     if ($index < $questions.length) {
       $index++;
-      $showFeedback = false
     }
   }
 
@@ -84,6 +83,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    width: 80%;
   }
 
   article > div {
@@ -114,8 +114,10 @@
   }
 
   .q {
-    max-width: 500px;
+    width: 80%;
+    margin: 0 auto;
   }
+
 
 </style>
 

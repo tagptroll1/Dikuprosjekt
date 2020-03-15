@@ -38,12 +38,25 @@
 
     $questions.forEach(q => {
       ids.push(q._id);
+      if (q.type == "unittest") {
+        dataset.questions.push({
+          question_id: q._id,
+          selected_answer: q.answer.selected_answer,
+          num_tests: q.answer.num_tests,
+          num_correct: q.answer.num_correct,
+          correct: q.answer.all_correct,
+          show_solution: q.answer.show_solution,
+          tries: q.answer.tries
+        })
+      } else {
       dataset.questions.push({
         question_id: q._id,
         selected_answer: q.answer.selected_answer,
         correct: q.answer.correct,
+        //time_spent: q.timeSpent,
         tries: q.answer.tries
       });
+      }
       if (q.answer.correct) totalCorrect++;
     });
 
@@ -67,11 +80,15 @@
 </script>
 
 <style>
-  span {
+  .false {
     color: red;
   }
   .correct {
     color: green;
+  }
+
+  #outOf {
+    font-weight: 800;
   }
 
   h2 {
@@ -125,7 +142,7 @@
     {#each resp as quest, i}
       <li on:click={() => (quest.show ^= 1)}>
         <h2>
-          <span class:correct={quest.answer.correct}>
+          <span class={quest.answer.correct ? "correct" : "false"}>
             {quest.answer.correct ? '✔' : '✖'}
           </span>
           Question {i + 1}
@@ -136,9 +153,21 @@
             out:fly={{ y: -100, duration: 100 }}
             in:fly={{ y: -100, duration: 500 }}>
             <p>{quest.question_text}</p>
-            {#if quest.type != "unittest"} 
+            {#if quest.type === "unittest"}
+              <p>
+              Your code:
+               <Codeblock code={quest.answer.selected_answer || 'Nothing' } />
+              </p>
+              <p>
+              You got <span id="outOf">{quest.answer.num_correct}</span> out of <span style="font-weight: 500;">{quest.answer.num_tests}</span>
+              </p>
+              {#if quest.answer.correct} 
+              <h3>
+                That is everything correct! Good work
+              </h3>
+              {/if}
+            {:else}
               <Codeblock code={quest.question_code.replace('@@', '[ ]')} />
-            {/if}
             <p>
               You selected:
               <code>{quest.answer.selected_answer || 'Nothing'}</code>
@@ -151,7 +180,9 @@
               </p>
             {/if}
             {#if quest.feedback}
+              <!-- Gjøre det tydeligere at dette er feedback -->
               <p>{quest.feedback}</p>
+            {/if}
             {/if}
           </section>
         {/if}

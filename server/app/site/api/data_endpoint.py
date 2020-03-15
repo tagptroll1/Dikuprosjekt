@@ -5,7 +5,7 @@ from app.decorators.api_decorators import json_serialize
 from app.decorators.protected import protected
 from app.site.api.ApiBase import ApiBase, ApiBaseDefault, validate_body
 from app.site.exceptions import QuestionAlreadyExistsException
-from app.site.models.session_data import DataModel, QuestionDataModel
+from app.site.models.session_data import DataModel, QuestionDataModel, UnitTestingQuestionDataModel
 
 from flask import request
 
@@ -35,11 +35,13 @@ class DatasetEndpoint(ApiBase):
         questions = body["questions"]
         errors = []
         for question in questions:
-            error_or_None = validate_body(question, types)
-            if error_or_None is not None:
+            error_or_None = [validate_body(question, types), validate_body(question, typing.get_type_hints(UnitTestingQuestionDataModel))]
+            print(error_or_None)
+            if all(elem is not None for elem in error_or_None):
                 errors.append({
                     "message": f"{error_or_None} - question invalid"
                 })
+
 
         if errors:
             return {"error": errors}, 400

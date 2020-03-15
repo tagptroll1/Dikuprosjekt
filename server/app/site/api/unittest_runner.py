@@ -13,30 +13,44 @@ def look_for_function(module, function, func_name):
 functions_c = []
 
 
-def main(code, tests):
-    functions = [
-        a
-        for a in dir(tests)
-        if isinstance(getattr(tests, a), types.FunctionType)
-    ]
-
-
-    for i in functions:
-        functions_c.append(look_for_function(tests, functions, i))
-
-    print(functions_c)
-
+def main(code, tests, code_ans, func_name):
     try:
-        ans = code.my_function()
-        if ans is not None:
-            return tests.test(ans), ans
-    except Exception as err:
-        return 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno) + "\n" + str(type(err).__name__) + "\n" + str(err), "None"
+        # Student
+        code_module = types.ModuleType("code", code)
+        exec(code, code_module.__dict__)
 
-    return "Koden din må returnere noe!", "None"
+        # Answer
+        code_module_ans = types.ModuleType("code_ans", code_ans)
+        exec(code_ans, code_module_ans.__dict__)
+
+        try:
+            method_to_call = getattr(code_module, func_name)
+        except:
+            f"{func_name} not found"
 
 
+        student_ans = []
 
+        for i in tests:
+            try:
+                student_ans.append(method_to_call(i[0], i[1]))
+            except Exception as err:
+                student_ans.append('Error on line {}'.format(sys.exc_info()[-1].tb_lineno) + "\n" + str(
+                    type(err).__name__) + "\n" + str(err))
+
+
+        ans = [getattr(code_module_ans, func_name)(i[0], i[1]) for i in tests]
+
+
+        obj = {
+            "student_ans": student_ans,
+            "ans": ans,
+            "all_same": sorted(ans) == sorted(student_ans)
+        }
+
+        return obj
+    except:
+        return "Error"
 
 
 

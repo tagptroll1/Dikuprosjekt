@@ -14,6 +14,8 @@ from .ApiBase import ApiBase, ApiBaseDefault, validate_body
 
 
 class Feedback(ApiBaseDefault):
+
+    #TODO Sjekk at feedbackID ikke finnes fra før!
     model = FeedbackModel
 
 

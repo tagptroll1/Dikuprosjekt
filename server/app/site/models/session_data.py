@@ -16,3 +16,12 @@ class QuestionDataModel:
     correct: bool
     #time_spent: int  # seconds
     tries: int  # num of tries
+
+class UnitTestingQuestionDataModel:
+    question_id: str
+    selected_answer: str
+    all_correct: bool
+    num_tests: int
+    correct: int
+    tries: int
+    show_solution: bool

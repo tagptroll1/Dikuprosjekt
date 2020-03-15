@@ -23,8 +23,6 @@
       question_id: $question._id,
       selected_answer: selected,
       correct: correct,
-      ended_question: new Date(Date.now()).toString(),
-      tries: tries
     };
 
     const dispatch_obj = {
@@ -32,7 +30,13 @@
       correct: selected === $question.question_answer
     };
   }
+
+  // Torsdag: 7
+  // Fredag: 6 timer
+  // Lørdag : 2 timer
 </script>
+
+
 
 <style>
   button {
@@ -83,6 +87,7 @@
 
 <div id="choices">
   <ul>
+    {#if $question.type === "multichoice"}
     {#each $question.alternatives as alternative}
       <li>
         <button
@@ -92,5 +97,6 @@
         </button>
       </li>
     {/each}
+    {/if}
   </ul>
 </div>

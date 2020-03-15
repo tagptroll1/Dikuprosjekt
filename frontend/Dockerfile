@@ -22,7 +22,4 @@ COPY --from=build /app/__sapper__/build __sapper__/build
 COPY --from=build /app/static static
 COPY --from=prod /app .
 
-EXPOSE 3000
-EXPOSE 80
-
 CMD ["node", "__sapper__/build"]

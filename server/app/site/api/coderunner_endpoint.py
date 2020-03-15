@@ -13,19 +13,14 @@ class CoderunnerEndpoint(ApiBaseDefault):
 
     def post(self):
         data = request.get_json()
+        code_ans = data["answer_code"]
         code = data["code"]
-        tests = data["unit_tests"]
+        tests = data["tests"]
+        function_name = data["function_name"]
 
-        code_module = types.ModuleType("code", code)
-        test_module = types.ModuleType("tests", tests)
+        obj = main(code, tests, code_ans, function_name)
 
-
-        exec(code, code_module.__dict__)
-        exec(tests, test_module.__dict__)
-
-        feedback, ans = main(code_module, test_module)
-
-        return jsonify(fd=feedback, ans=ans)
+        return jsonify(obj)
 
 
 endpoints = {
