@@ -24,27 +24,31 @@ def main(code, tests, code_ans, func_name):
         exec(code_ans, code_module_ans.__dict__)
 
         try:
-            method_to_call = getattr(code_module, func_name)
+            method_to_call_student = getattr(code_module, func_name)
+            method_to_call_ans = getattr(code_module_ans, func_name)
         except:
             f"{func_name} not found"
 
 
         student_ans = []
+        ans = []
 
         for i in tests:
             try:
                 if len(tests[0] == 1):
-                    student_ans.append(method_to_call(i[0]))
+                    student_ans.append(method_to_call_student(i[0]))
+                    ans.append(method_to_call_ans(i[0]))
                 elif len(tests[0] == 2):
-                    student_ans.append(method_to_call(i[0], i[1]))
+                    student_ans.append(method_to_call_student(i[0], i[1]))
+                    ans.append(method_to_call_ans(i[0], i[1]))
                 elif len(tests[3] == 3):
-                    student_ans.append(method_to_call(i[0], i[1], i[2]))
+                    student_ans.append(method_to_call_student(i[0], i[1], i[2]))
+                    ans.append(method_to_call_ans(i[0], i[1], i[2]))
 
             except Exception as err:
                 student_ans.append('Error on line {}'.format(sys.exc_info()[-1].tb_lineno) + "\n" + str(
                     type(err).__name__) + "\n" + str(err))
 
-        ans = [getattr(code_module_ans, func_name)(i[0], i[1]) for i in tests]
 
         obj = {
             "student_ans": student_ans,
