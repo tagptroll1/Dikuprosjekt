@@ -125,7 +125,13 @@
       {#each ans as a, i}
         <tr>
           <td>
-           <span> {$question.function_name}({$question.question_testcases[i][0]}, {$question.question_testcases[i][1]}) &#8594; {a}</span>
+            {#if $question.question_testcases[0].length === 1}
+              <span> {$question.function_name}({$question.question_testcases[i][0]}) &#8594; {a}</span>
+            {:else if $question.question_testcases[0].length === 2}
+              <span> {$question.function_name}({$question.question_testcases[i][0]}, {$question.question_testcases[i][1]}) &#8594; {a}</span>
+            {:else}
+              <span> {$question.function_name}({$question.question_testcases[i][0]}, {$question.question_testcases[i][1]}, {$question.question_testcases[i][2]}) &#8594; {a}</span>
+            {/if}
           </td>
           <td style="width: 20px;">
             <span> {studentAns[i]} </span> 
