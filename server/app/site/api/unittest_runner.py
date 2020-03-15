@@ -33,14 +33,18 @@ def main(code, tests, code_ans, func_name):
 
         for i in tests:
             try:
-                student_ans.append(method_to_call(i[0], i[1]))
+                if len(tests[0] == 1):
+                    student_ans.append(method_to_call(i[0]))
+                elif len(tests[0] == 2):
+                    student_ans.append(method_to_call(i[0], i[1]))
+                elif len(tests[3] == 3):
+                    student_ans.append(method_to_call(i[0], i[1], i[2]))
+
             except Exception as err:
                 student_ans.append('Error on line {}'.format(sys.exc_info()[-1].tb_lineno) + "\n" + str(
                     type(err).__name__) + "\n" + str(err))
 
-
         ans = [getattr(code_module_ans, func_name)(i[0], i[1]) for i in tests]
-
 
         obj = {
             "student_ans": student_ans,
