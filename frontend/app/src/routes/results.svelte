@@ -159,7 +159,7 @@
                <Codeblock code={quest.answer.selected_answer || 'Nothing' } />
               </p>
               <p>
-              You got <span id="outOf">{quest.answer.num_correct}</span> out of <span style="font-weight: 500;">{quest.answer.num_tests}</span>
+              You got <code>{quest.answer.selected_answer || 'Nothing'}{quest.answer.num_correct}</code> out of <code>{quest.answer.selected_answer || 'Nothing'}{quest.answer.num_tests}</code>
               </p>
               {#if quest.answer.correct} 
               <h3>
