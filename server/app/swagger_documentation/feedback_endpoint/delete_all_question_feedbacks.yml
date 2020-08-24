@@ -1,0 +1,14 @@
+Deletes ALL feedback objects. (this will actually empty the database, be carefull)
+---
+tags:
+  - Feedback
+
+# Description of what data the user recieves from this endpoint.
+responses:
+        '200':
+          description: OK
+          content:
+            text/json:
+              schema:
+                type: string
+                example: All feedback deleted

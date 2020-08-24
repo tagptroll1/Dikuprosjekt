@@ -1,0 +1,24 @@
+Delete a specific feedback object.
+---
+tags:
+  - Feedback
+
+
+parameters:
+- in: path
+  name: id_
+  description: The feedback object's ID
+  schema:
+    type: string
+  required: true
+
+
+# Description of what data the user recieves from this endpoint.
+responses:
+        '200':
+          description: OK
+          content:
+            text/json:
+              schema:
+                type: string
+                example: Feedback deleted

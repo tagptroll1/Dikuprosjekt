@@ -1,6 +1,5 @@
 <script>
   import question from "../../stores/question";
-
   import Dropdown from "./_Dropdown.svelte";
   import MultiChoice from "./_MultiChoice.svelte";
   import FillIn from "./_FillIn.svelte";

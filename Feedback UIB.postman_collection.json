@@ -1,0 +1,110 @@
+{
+	"info": {
+		"_postman_id": "d1f7e9d5-fa4c-4c5a-8fb2-c6a314ddf605",
+		"name": "Feedback UIB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post question",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a5a1f8c0-9f80-4338-857d-b53eeab7d46d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "token a204bbe9-c5fe-4239-b4c8-5e79a6e28a20",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"question_text\": \"Kukkasmak er et testspørsmål\",\r\n        \"question_code\": \"def f(message)\\nprint(message)\",\r\n        \"question_answer\": \"Dette er riktig svar\",\r\n        \"alternatives\": [\r\n            \"Dette er riktig svar\",\r\n            \"Dette er feil\",\r\n            \"Dette er også feil\"\r\n        ],\r\n        \"difficulty\": 1,\r\n        \"tags\": [\r\n            \"test\",\r\n            \"easy\"\r\n        ],\r\n        \"type\": \"multichoice\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_URL}}/api/v1/questions",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"questions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post question failed auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bc3fd6a0-9a1f-440f-93e3-97dc86e4ceeb",
+						"exec": [
+							"pm.test(\"Should return permission denied\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "token a20-5e79a6e28a20"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"question_text\": \"Kukkasmak er et testspørsmål\",\r\n        \"question_code\": \"def f(message)\\nprint(message)\",\r\n        \"question_answer\": \"Dette er riktig svar\",\r\n        \"alternatives\": [\r\n            \"Dette er riktig svar\",\r\n            \"Dette er feil\",\r\n            \"Dette er også feil\"\r\n        ],\r\n        \"difficulty\": 1,\r\n        \"tags\": [\r\n            \"test\",\r\n            \"easy\"\r\n        ],\r\n        \"type\": \"multichoice\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_URL}}/api/v1/questions",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"questions"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

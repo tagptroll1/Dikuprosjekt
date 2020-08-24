@@ -1,0 +1,164 @@
+Post a question to the database.
+---
+summary: Posts questions to the database.
+consumes:
+  - application/json
+tags:
+  - Questions
+
+summary: Add a new question to the database
+operationId: addQuestion
+requestBody:
+  description: List of question objects that needs to be added to the database.
+  content:
+    application/json:   
+      schema:
+          type: array
+          description: A list of questions objects that represents different question types.
+          items:
+              type: object
+              properties:
+                question_text:
+                  type: string
+                  description: Question for the student to answer
+                  enum: Hva blir printet ut av følgende kode?
+              
+                question_code:
+                  type: string
+                  description: Text values which will be visually rendered as python code for the user. Should be related to the question being posed. Use escape characters to simulate tabs and indentation.
+                  enum: "for i in range(1, 5): \n \t print(i, end='')"
+               
+                question_answer:
+                  type: string
+                  description: The correct answer to the question.
+                  enum: "1234"
+               
+                difficulty:
+                  type: integer
+                  description: Integer between 1 and 5 which describes the difficulty of the question.
+                  minimum: 1
+                  maximum: 5
+                  format: int64
+                  enum:
+                    - 1
+                    - 2
+                    - 3
+                    - 4
+                    - 5
+                   
+                alternatives:
+                  type: array
+                  description: A list of alternatives for the multichoice question. Should be a number between 2 and 10.
+                  minimum: 2
+                  maximum: 10
+                  items:
+                    type: string
+                    description: An answer alternative.
+                    enum: ['1234','12345','01234','012345']
+                  
+                    
+                tags:
+                  type: array
+                  description: Tags that describe this question.
+                  items:
+                    type: string
+                    enum:
+                      - chapter2
+                      - Conditionals
+                      - Lists
+                      - Strings
+                      - etc...
+                type:
+                  type: string
+                  default: multichoice
+                  description: The type of question you want to post.
+                  enum:
+                  - multichoice
+                  - fillin
+                  - dropdown
+
+
+
+# Description of what data the user recieves from this endpoint.
+responses:
+  '400':
+    description: BAD REQUEST
+    content:
+      aplication/json:
+        schema:
+          type: object
+          properties: 
+            errors:
+            type: array
+            message:
+              type: string
+              enum: X is not a supported field. 
+
+  '200':
+          description: OK
+          content:
+            application/json:   
+              schema:
+                  type: array
+                  description: A list of questions objects that represents different question types.
+                  items:
+                      type: object
+                      properties:
+                        question_text:
+                          type: string
+                          description: Question for the student to answer
+                          enum: Hva blir printet ut av følgende kode?
+                     
+                        question_code:
+                          type: string
+                          description: Text values which will be visually rendered as python code for the user. Should be related to the question being posed. Use escape characters to simulate tabs and indentation.
+                          enum: 'for i in range(1, 5): \n \t print(i, end="")'
+                     
+                        question_answer:
+                            type: string
+                            description: The correct answer to the question.
+                            enum: "1234"
+                       
+                        difficulty:
+                          type: integer
+                          minimum: 1
+                          maximum: 20
+                          format: int64
+                          enum:
+                            1
+                          description: Integer between 1 and 5 which describes the difficulty of the question.
+                       
+                        alternatives:
+                          type: array
+                          description: A list of alternatives for the multichoice question. Should be a number between 2 and 10.
+                          minimum: 2
+                          maximum: 10
+                          items:
+                            type: string
+                            description: An answer alternative.
+                            enum: ['1234','12345','01234','012345']
+                            
+                        tags:
+                          type: array
+                          description: Tags that describe this question.
+                          items:
+                            type: string
+                            enum:
+                              - Chapter 1
+                              - Conditionals
+                              - Lists
+                              - Strings
+                              - etc...
+                        type:
+                          type: string
+                          default: multichoice
+                          description: The type of question you want to post.
+                          enum:
+                          - multichoice
+                          - fillin
+                          - dropdown
+                        _id:
+                          type: string
+                          description: Unique ID for this question object, automatically generated.
+                          enum: 
+                            - 5efefe6fb82aaf23629b34e5

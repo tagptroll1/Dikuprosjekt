@@ -1,7 +1,8 @@
 <script>
-  export let segment;
+  //export let segment;
   import { goto } from "@sapper/app";
   import { onMount, onDestroy } from "svelte";
+  import { postData } from "api.js";
 
   // Stores
   import user from "../../stores/user";
@@ -10,13 +11,61 @@
   import questions from "../../stores/questions";
   import showFeedback from "../../stores/feedback";
 
-  // Components 
+  import selectedChapter from "../../stores/selectedChapter";
+  import selectedDifficulty from "../../stores/selectedDifficulty";
+  import { startDate } from "../../stores/dates";
+  import { startTime } from "../../stores/dates";
+
+  // Components
   import ProgressBar from "./_components/_ProgressBar.svelte";
 
+  //Copied and slightly altered from results.svelte, refactor later
+  async function init() {
+    const dataset = {
+      start_time: $startDate,
+      end_time: new Date(Date.now()),
+      user: $user,
+      selected_chapter: $selectedChapter,
+      selected_difficulty: $selectedDifficulty,
+      questions: []
+    };
+
+    const ids = [];
+    const return_value = [];
+    ensureAnswer();
+
+    for (let i = 0; i <= $index; i++) {
+      let q = $questions[i];
+
+      ids.push(q._id);
+
+      if (q.type == "unittest") {
+        dataset.questions.push({
+          question_id: q._id,
+          selected_answer: q.answer.selected_answer,
+          num_tests: q.answer.num_tests,
+          num_correct: q.answer.num_correct,
+          correct: q.answer.all_correct,
+          show_solution: q.answer.show_solution,
+          tries: q.answer.tries
+        });
+      } else {
+        dataset.questions.push({
+          question_id: q._id,
+          selected_answer: q.answer.selected_answer,
+          correct: q.answer.correct,
+          time_spent: q.answer.time_spent,
+          tries: q.answer.tries
+        });
+      }
+    }
+    await postData(dataset);
+
+    goto("/dashboard");
+  }
 
   let areYouSure = false;
   let interval;
-  
 
   onDestroy(() => {
     if (interval) {
@@ -28,14 +77,22 @@
 
   function ensureAnswer() {
     if (!$question.answer) {
+      let end_time = new Date().getTime() / 1000;
       $questions[$index].answer = {
         user: $user,
         question_id: $question._id,
         selected_answer: "No answer",
         correct: false,
-        ended_question: new Date(Date.now()).toString()
+        ended_question: new Date(Date.now()).toString(),
+        tries: 0,
+        time_spent: Math.round(end_time - $startTime)
       };
     }
+  }
+
+  function submitMidways() {
+    let datapack = init();
+    console.log(datapack);
   }
 
   function next() {
@@ -49,8 +106,7 @@
   function prev() {
     ensureAnswer();
     if ($index > 0) $index--;
-          $showFeedback = false;
-
+    $showFeedback = false;
   }
 
   function submit(e, force = false) {
@@ -92,7 +148,7 @@
     padding: 10px 20px;
 
     background-color: rgb(217, 255, 247);
-    box-shadow: 0 0 3px -2px bla  ck;
+    box-shadow: 0 0 3px -2px bla ck;
     text-align: center;
 
     align-items: center;
@@ -112,7 +168,10 @@
     margin: 0 auto;
   }
 
-
+  .prompt {
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
 </style>
 
 <section>
@@ -120,15 +179,15 @@
     <ProgressBar len={$questions.length} />
   </div>
 </section>
-<article>
+<article class="prompt">
   <div class:show={areYouSure}>
-    <p>Are you sure you wish to submit you answers and view the results?</p>
+    <p>Er du sikker på at du vil fullføre denne seksjonen?</p>
     <p>
-      You have unanswered questions. Index: {unanswered_index && unanswered_index.toString()}
+      Du har ubesvarte spørsmål: {unanswered_index && unanswered_index.toString()}
     </p>
     <div>
-      <button on:click={() => (areYouSure = false)}>Go back</button>
-      <button on:click={e => submit(e, true)}>Submit!</button>
+      <button on:click={() => (areYouSure = false)}>Gå tilbake!</button>
+      <button on:click={e => submit(e, true)}>Fullfør</button>
     </div>
   </div>
   <section class="q">
@@ -137,12 +196,15 @@
 </article>
 <section>
   <!-- Buttons -->
+  {#if $index < $questions.length - 1}
+    <button id="quit" on:click={submitMidways}>Avslutt</button>
+  {/if}
   {#if $index > 0}
-    <button id="prev" on:click={prev}>Forrige</button>
+    <!-- <button id="prev" on:click={prev}>Forrige</button> -->
   {/if}
   {#if $index != $questions.length - 1}
-    <button id="next" on:click={next}>Next</button>
+    <button id="next" on:click={next}>Neste</button>
   {:else}
-    <button id="end" on:click={submit}>Finish quiz</button>
+    <button id="end" on:click={submit}>Fullfør quiz</button>
   {/if}
 </section>

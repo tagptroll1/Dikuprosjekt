@@ -1,0 +1,40 @@
+Upload data manually.
+---
+summary: Returns all statistics /data thats in the database. 
+tags:
+  - Statistics   
+
+      
+
+# Description of what data the user recieves from this endpoint.
+responses:
+        '200':
+          description: OK
+          content:
+            text/json:
+              schema:
+                multichoice:
+                  properties:
+                    _id:
+                      type: string
+                    question_text:
+                      type: string
+                    question_code:
+                        type: string
+                    question_answer:
+                        type: string
+                    alternatives:
+                      type: list
+                    difficulty:
+                      type: int
+                    tags:
+                      type: list                  
+
+
+        '400':
+          decription: BAD REQUEST
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "message: X is not a supported field"

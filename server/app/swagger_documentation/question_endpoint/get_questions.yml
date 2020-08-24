@@ -1,0 +1,59 @@
+Retrieves a subset or all of the questions in the database. 
+---
+summary: Returns all questions in the database. Accepts querry parameters to filter 
+tags:
+  - Questions  
+
+parameters:
+  - in: query
+    name: multichoice
+    schema:
+      type: string
+      example: ''
+    description: Specify the number of multiplechoice questions you wish to recieve. Leave empty to recieve all of them. 
+  - in: query
+    name: dropdown
+    schema:
+      type: string
+      example: ''
+    description: Specify the number of dropdown questions you wish to recieve. Leave empty to recieve all of them.
+  - in: query
+    name: fillin
+    schema:
+      type: string
+      example: ""
+    description: Specify the number of fillin questions you wish to recieve. Leave empty to recieve all of them..
+      
+
+# Description of what data the user recieves from this endpoint.
+responses:
+        '200':
+          description: OK
+          content:
+            text/json:
+              schema:
+                multichoice:
+                  properties:
+                    _id:
+                      type: string
+                    question_text:
+                      type: string
+                    question_code:
+                        type: string
+                    question_answer:
+                        type: string
+                    alternatives:
+                      type: list
+                    difficulty:
+                      type: int
+                    tags:
+                      type: list                  
+
+
+        '400':
+          decription: BAD REQUEST
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "message: X is not a supported field"

@@ -1,0 +1,55 @@
+[
+    {
+        "question_text": "Fyll inn det som mangler\nEksempel på funksjonskall\n`>>> snittHastighet(10,100)`\n`10.0`",
+        "question_code": "def snitt_hastighet(@@):\n\tif tid == 0:\n\t\tprint('Kan ikke beregne snitthastighet')\n\t\treturn\n\treturn distanse / tid",
+        "question_answer": "tid, distanse",
+        "alternatives": [
+            "tid, distanse",
+            "distanse, tid",
+            "distanse/tid "
+        ],
+        "difficulty": 2,
+        "tags": [
+            "medium",
+            "set1",
+            "function",
+            "return",
+            "if",
+            "positional-arguments"
+        ],
+        "type": "dropdown"
+    },
+    {
+        "question_text": "Hva blir utskriften?",
+        "question_code": "x = 2\ny = 3\nprint(2 * int(str(x) + str(y)))",
+        "question_answer": "46",
+        "alternatives": [
+            "46",
+            "2323",
+            "10"
+        ],
+        "difficulty": 1,
+        "tags": [
+            "print",
+            "easy",
+            "set1",
+            "str",
+            "int",
+            "concatination"
+        ],
+        "type": "multichoice"
+    },
+    {
+        "tags": [
+            "print",
+            "set1",
+            "strings",
+            "concatination"
+        ],
+        "difficulty": 1,
+        "question_text": "Fyll inn riktig utskrift fra dette print() uttrykket",
+        "question_code": "first='10' \n second='15' \n print(first+second)",
+        "question_answer": 100150,
+        "type": "fillin"
+    }
+]

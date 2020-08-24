@@ -1,0 +1,14 @@
+Deletes ALL userdata objects (this will actually empty the database, be carefull)
+---
+tags:
+  - User Data
+
+# Description of what data the user recieves from this endpoint.
+responses:
+        '200':
+          description: OK
+          content:
+            text/json:
+              schema:
+                type: string
+                example: All user data deleted

@@ -11,6 +11,3 @@ class MultiChoiceModel:
     question_code: str
     question_answer: str
     alternatives: List
-
-    # antall riktige / antall forsøkt
-    # mer synlig spørsmål
