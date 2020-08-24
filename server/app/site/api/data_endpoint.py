@@ -1,25 +1,29 @@
 import os
 import typing
 
+from flasgger.utils import swag_from  # Specify swagger doc path
 from app.decorators.api_decorators import json_serialize
 from app.decorators.protected import protected
 from app.site.api.ApiBase import ApiBase, ApiBaseDefault, validate_body
 from app.site.exceptions import QuestionAlreadyExistsException
 from app.site.models.session_data import DataModel, QuestionDataModel, UnitTestingQuestionDataModel
-
 from flask import request
+
+
+SWAGGERDOC_PATH = '../../swagger_documentation/data_endpoint'
 
 
 class DataEndpoint(ApiBaseDefault):
     """/api/v1/data"""
 
-
     model = DataModel
+
 
 class DatasetEndpoint(ApiBase):
     """/api/v1/dataset"""
     @protected
     @json_serialize
+    @swag_from(f'{SWAGGERDOC_PATH}/post_data.yml')
     def post(self):
         body = request.get_json()
 
@@ -35,13 +39,13 @@ class DatasetEndpoint(ApiBase):
         questions = body["questions"]
         errors = []
         for question in questions:
-            error_or_None = [validate_body(question, types), validate_body(question, typing.get_type_hints(UnitTestingQuestionDataModel))]
+            error_or_None = [validate_body(question, types), validate_body(
+                question, typing.get_type_hints(UnitTestingQuestionDataModel))]
             print(error_or_None)
             if all(elem is not None for elem in error_or_None):
                 errors.append({
                     "message": f"{error_or_None} - question invalid"
                 })
-
 
         if errors:
             return {"error": errors}, 400
@@ -71,6 +75,7 @@ class DatasetEndpoint(ApiBase):
 
     @protected
     @json_serialize
+    @swag_from(f'{SWAGGERDOC_PATH}/del_data.yml')
     def delete(self):
         self.database.drop_table(DataModel.TABLE)
 

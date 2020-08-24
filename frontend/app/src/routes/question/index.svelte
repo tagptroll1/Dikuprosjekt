@@ -1,15 +1,28 @@
 <script>
+  import { goto } from "@sapper/app";
+  import { onMount, onDestroy } from "svelte";
   import Question from "./_Question.svelte";
   import questions from "../../stores/questions";
   import { startDate } from "../../stores/dates";
+  import { startTime } from "../../stores/dates";
 
-  let promise = getQuestions();
+  import selectedChapter from "../../stores/selectedChapter";
+  import selectedDifficulty from "../../stores/selectedDifficulty";
+  import newQuestionSet from "../../stores/newQuestionSet";
 
-  async function getQuestions() {
+  let promise;
+
+  if ($newQuestionSet == true) {
+    promise = getQuestions($selectedChapter, $selectedDifficulty);
+  }
+
+  async function getQuestions(chapter, diff) {
     let count = 0;
     while ($questions.length <= 0 && process.browser && count < 10) {
       try {
-        const resp = await fetch("api/questions"); // Change this to get different questions
+        const resp = await fetch(
+          `api/questions/?difficulty=${diff}&tags=chapter${chapter}`
+        );
         if (!resp.ok) {
           continue;
         }
@@ -27,8 +40,14 @@
       }
       count++;
     }
+    $newQuestionSet = false;
   }
   $startDate = new Date(Date.now());
+  $startTime = new Date().getTime() / 1000;
+
+  function goToDash() {
+    goto("../dashboard");
+  }
 </script>
 
 <style>
@@ -37,10 +56,15 @@
   }
 </style>
 
-{#await promise}
-  Loading...
-{:then result}
-  <Question />
-{:catch err}
-  <p>Something went wrong :(</p>
-{/await}
+{#if $selectedChapter == 0}
+  <button style="display:none" on:click|once={goToDash()} />
+{:else}
+  {#await promise}
+    Loading...
+  {:then result}
+
+    <Question />
+  {:catch err}
+    <p>Something went wrong :(</p>
+  {/await}
+{/if}

@@ -7,6 +7,12 @@
   $: highlighted = hljs.highlight("python", code);
 </script>
 
+<style>
+  pre {
+    overflow: scroll;
+  }
+</style>
+
 {#if highlighted.value}
   <pre>
     <code>

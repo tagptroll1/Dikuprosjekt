@@ -1,0 +1,39 @@
+Adds a question feedback dictionary to the database
+---
+summary: Posts a question feedback object. This object maps individual feedback objects to actual questions in the database. 
+consumes:
+  - application/json
+tags:
+  - Feedback
+
+operationId: addQuestionFeedback
+requestBody:
+  description: Feedback object
+  content:
+    application/json:   
+      schema: 
+        type: object
+        properties:
+          question_id:
+            type: string
+            description: The ID of the question which you whish to create a feedback object for.
+            enum: the_questions_id
+          feedbacks:
+            type: object
+            description: An object that contains a dictionary of alternatives, and the feedback ID's you wish to connect them with.
+            additionalProperties:
+              type: string
+            example:
+              Right answer: feedbackObjectId
+              Wrong alternative: feedbackObjectId
+              Also the wrong alternative: feedbackObjectId
+                
+
+# Description of what data the user recieves from this endpoint.
+responses:
+  '400':
+    description: BAD REQUEST
+
+
+  '200':
+    description: OK

@@ -10,7 +10,9 @@ from app.site.api.sets_endpoint import endpoints as set_endpoint
 from app.site.api.question_line_endpoint import endpoints as q_line_endpoint
 from app.site.api.coderunner_endpoint import endpoints as coderunner_endpoint
 from app.site.api.unit_test_endpoint import endpoints as unittest_endpoint
+from app.site.api.userdata_endpoint import endpoints as userdata_endpoint
 from app.site.manager import Manager
+from flask import send_from_directory
 
 parser = argparse.ArgumentParser(
     description='Running the server.  -P / --production to disable debug',
@@ -35,10 +37,11 @@ endpoints = (
     questionset,
     q_line_endpoint,
     coderunner_endpoint,
-    unittest_endpoint
+    unittest_endpoint,
+    userdata_endpoint
 )
 manager.load_api_resources(endpoints)
 
 if __name__ == "__main__":
     args = parser.parse_args()
-    manager.run(debug=args.production)
+    manager.run(debug=args.production, host="0.0.0.0")

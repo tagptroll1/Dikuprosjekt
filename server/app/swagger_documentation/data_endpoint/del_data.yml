@@ -1,0 +1,22 @@
+Delete stored data.
+---
+tags:
+  - Statistics
+
+parameters:
+  - in: path
+    name: id_
+    schema:
+      type: string
+    required: true
+
+
+# Description of what data the user recieves from this endpoint.
+responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: pong

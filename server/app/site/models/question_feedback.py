@@ -2,7 +2,7 @@ from typing import Dict
 
 
 class QuestionFeedback:
-    TABLE = "feedback"
+    TABLE = "question_feedback"
 
     question_id: str
     feedbacks: Dict

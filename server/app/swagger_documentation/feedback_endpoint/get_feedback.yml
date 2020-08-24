@@ -1,0 +1,41 @@
+Retrieve feedback objects.
+---
+summary: Get all list of all the feedback objects found in the database.
+description: 
+consumes:
+  - application/json
+tags:
+  - Feedback
+description: Retrieve all feedback objects. A feedback object, is an object which represents a piece of information. These objects can be connected to answer alternatives of questions in the quiz through the creation of question_feedback objects. A question feedback object connects feedback to all alternatives of a specific question, and will be displayed to the user when clicking that alternative at the end of the quiz when the user recieves feedback.  
+operationId: getQuestionFeedback
+responses:
+        '200':
+          description: OK
+          content:
+            text/json:
+              schema:
+                array:
+                  items:
+                    type: object
+                    properties:
+                      feedback_id:
+                        type: string
+                        description: User specifyed ID for this type of feedback.
+                        enum: range_method_stop_parameter
+                      feedback:
+                        type: array
+                        description: The first element of this list, is what the user will see upon pressing the alternative. At the end of the quiz, every single element in this list will be included for the user to read.
+                        items:
+                          type: string
+                          description: The information we want to show to the user upon clicking an alternative.
+                          enum: range() metoden i python vil telle fra start parameteret til stop parameteret, men vil aldri inkludere sistnevnte.  
+
+
+
+        '400':
+          decription: BAD REQUEST
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ' "message": "Failed to decode JSON object: Extra data: line X column Y (char Z)"'

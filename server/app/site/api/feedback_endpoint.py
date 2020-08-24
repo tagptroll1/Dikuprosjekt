@@ -1,5 +1,6 @@
 import typing
 
+from flasgger.utils import swag_from  # Specify swagger doc path
 from app.decorators.api_decorators import json_serialize
 from app.decorators.protected import protected
 from app.site.exceptions import QuestionAlreadyExistsException
@@ -9,42 +10,30 @@ from app.site.models.question_feedback import (
 )
 
 from flask import request
-
 from .ApiBase import ApiBase, ApiBaseDefault, validate_body
 
-
-class Feedback(ApiBaseDefault):
-
-    #TODO Sjekk at feedbackID ikke finnes fra før!
-    model = FeedbackModel
-
-
-class FeedbackById(ApiBase):
-
-    @protected
-    @json_serialize
-    def post(self, id_):
-        ...
-
-    @protected
-    @json_serialize
-    def delete(self, id_):
-        delete_result = self.database.delete(FeedbackModel.TABLE, _id=id_)
-
-        if delete_result.deleted_count:
-            return {"message": "ok"}
-        return {"message": "nothing deleted"}, 400
-
-    @json_serialize
-    def get(self, id_):
-        getted = self.database.find_one(FeedbackModel.TABLE, feedback_id=id_)
-        if getted:
-            return getted, 200
-        return {"message": "No feedback for this id"}, 400
+SWAGGERDOC_PATH = '../../swagger_documentation/feedback_endpoint'
 
 
 class QuestionFeedback(ApiBase):
     @json_serialize
+    @swag_from(f'{SWAGGERDOC_PATH}/delete_all_question_feedbacks.yml')
+    def delete(self):
+        allFeedback = self.get()
+        for F in allFeedback:
+            print(f'Question feedback object {F["_id"]} deleted.')
+            try:
+                QuestionFeedBackById.delete(self, id_=F['_id'])
+            except TypeError:
+                return {"message": "Nothing to delete."}, 204
+
+        return {"message": f"{len(allFeedback)} feedback objects deleted."}, 200
+
+    def validate_set(self, body):
+        return True
+
+    @json_serialize
+    @swag_from(f'{SWAGGERDOC_PATH}/get_question_feedback.yaml')
     def get(self):
         self.manager.log.info(
             f"All {QuestionFeedbackModel.TABLE} entires were requested."
@@ -56,36 +45,10 @@ class QuestionFeedback(ApiBase):
             )
         )
 
-    def validate_set(self, body):
-        doesnt_exist = []
-        if body.get("feedbacks"):
-            for answer, feedback_id in body["feedbacks"].items():
-                id_ = feedback_id
-                if not self.database.exists(
-                    QuestionFeedbackModel.TABLE,
-                    feedback_id=id_
-                ):
-                    doesnt_exist.append(id_)
-
-        if doesnt_exist:
-            msg = ", ".join(doesnt_exist)
-            return {
-                "message": f'[{msg}] feedback ids dont exist'
-            }
-
-        if body.get("question_id"):
-            if not self.database.exists(
-                "questions", _id=body["question_id"]
-            ):
-                return {"message": "Question does not exist"}
-
-        return True
-
-    @protected
+    # @protected
     @json_serialize
     def patch(self):
         body = request.get_json()
-
         types = typing.get_type_hints(QuestionFeedbackModel)
         error_or_None = validate_body(body["new"], types, post=False)
 
@@ -129,8 +92,9 @@ class QuestionFeedback(ApiBase):
             return {"message": "Nothing changed, wrong endpoint?"}, 400
         return result, 200
 
-    @protected
+    # @protected
     @json_serialize
+    @swag_from(f'{SWAGGERDOC_PATH}/post_question_feedback.yaml')
     def post(self):
         body = request.get_json()
 
@@ -157,22 +121,41 @@ class QuestionFeedback(ApiBase):
             self.manager.log.info(
                 f"{QuestionFeedbackModel.TABLE} post returned 500 | {e}"
             )
-            return {"message": "Internal server error"}, 500
+            return {"message": f"Internal server error: {e}"}, 500
 
         self.manager.log.info(
             f"{QuestionFeedbackModel.TABLE} question was posted."
         )
+
         if response:
             return body, 201
         else:
             return {"message": "something went wrong"}, 500
 
 
+class QuestionFeedBackById(ApiBase):
+    @json_serialize
+    @swag_from(f"{SWAGGERDOC_PATH}/get_question_feedback_by_id.yml")
+    def get(self, id_):
+        getted = self.database.find_one(QuestionFeedbackModel.TABLE, _id=id_)
+        if getted:
+            return getted, 200
+        return {"message": "No feedback for this id"}, 400
+
+    @json_serialize
+    @swag_from(f"{SWAGGERDOC_PATH}/delete_question_feedback_by_id.yml")
+    def delete(self, id_):
+        delete_result = self.database.delete(
+            QuestionFeedbackModel.TABLE, _id=id_)
+        if delete_result.deleted_count:
+            return {"message": f"Question feedback object {id_} deleted."}, 200
+        return {"message": "nothing deleted"}, 400
+
+
 class FeedbackSet(ApiBase):
     @json_serialize
-
     def post(self):
-        body = request.get_json() ####
+        body = request.get_json()
         feedbacks = list(self.database.find("feedback", question_id=body))
         response = []
         for feedback in feedbacks:
@@ -187,13 +170,14 @@ class FeedbackSet(ApiBase):
                         resp[key] = feed["feedback"]
             response.append(resp)
 
+        print("testing", response)
         return response
 
 
-
 endpoints = {
-    "/api/v1/feedback": Feedback,
-    "/api/v1/feedback/<id_>": FeedbackById,
+    # "/api/v1/feedback": Feedback,
+    # "/api/v1/feedback/<id_>": FeedbackById,
     "/api/v1/question_feedback": QuestionFeedback,
-    "/api/v1/question_feedback/set": FeedbackSet,
+    "/api/v1/question_feedback/<id_>": QuestionFeedBackById,
+    "/api/v1/question_feedback/set": FeedbackSet
 }
