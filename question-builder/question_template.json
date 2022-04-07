@@ -1,0 +1,26 @@
+[
+    {
+        "question_text": "Pure text, can use ` for code snippets",
+        "question_code": "can use \\n for new line \\t for tabs, '@@' for dropdown box",
+        "question_answer": "answer",
+        "alternatives": [
+            "question_answer must be in here",
+            "answer"
+        ],
+        "difficulty": 1,
+        "tags": [],
+        "type": "dropdown"
+    },
+    {
+        "question_text": "Pure text, can use ` for code snippets",
+        "question_code": "can use \\n for new line \\t for tabs",
+        "question_answer": "answer",
+        "alternatives": [
+            "question_answer must be in here",
+            "answer"
+        ],
+        "difficulty": 1,
+        "tags": [],
+        "type": "multichoice"
+    }
+]
